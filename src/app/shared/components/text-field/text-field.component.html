@@ -1,0 +1,15 @@
+<div class="field">
+  <label [for]="label" class="label">{{ label }}</label>
+
+  <div class="control">
+    <input
+      [formControl]="controlRef"
+      [class.is-danger]="isError"
+      [placeholder]="placeholder"
+      [type]="type"
+      class="input"
+    />
+  </div>
+
+  <p class="help is-danger">{{ errorMessage }}</p>
+</div>
