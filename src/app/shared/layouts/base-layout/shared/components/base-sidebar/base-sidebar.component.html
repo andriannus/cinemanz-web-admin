@@ -1,0 +1,19 @@
+<div class="card">
+  <header class="card-header">
+    <span class="card-header-title">
+      Menus
+    </span>
+  </header>
+
+  <div class="card-content">
+    <aside class="menu">
+      <ul class="menu-list">
+        <li *ngFor="let menu of menus">
+          <a [routerLink]="menu.link" routerLinkActive="is-active">
+            {{ menu.name }}
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>
