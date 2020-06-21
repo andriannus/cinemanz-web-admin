@@ -13,9 +13,6 @@ export class TextFieldComponent {
   errorMessage: string;
 
   @Input()
-  isError: boolean;
-
-  @Input()
   label: string;
 
   @Input()
@@ -27,7 +24,6 @@ export class TextFieldComponent {
   constructor() {
     this.controlRef = null;
     this.errorMessage = '';
-    this.isError = false;
     this.label = '';
     this.placeholder = '';
     this.type = 'text';

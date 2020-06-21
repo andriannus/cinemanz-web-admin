@@ -1,15 +1,17 @@
 <div class="field">
-  <label [for]="label" class="label">{{ label }}</label>
+  <label [class.has-text-danger]="errorMessage" [for]="label" class="label">
+    {{ label }}
+  </label>
 
   <div class="control">
     <input
       [formControl]="controlRef"
-      [class.is-danger]="isError"
+      [class.is-danger]="errorMessage"
       [placeholder]="placeholder"
       [type]="type"
       class="input"
     />
   </div>
 
-  <p class="help is-danger">{{ errorMessage }}</p>
+  <p *ngIf="errorMessage" class="help is-danger">{{ errorMessage }}</p>
 </div>
