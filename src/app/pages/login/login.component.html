@@ -1,7 +1,7 @@
 <plain-layout>
   <div class="columns">
     <div class="column is-two-fifths is-offset-one-third">
-      <form>
+      <form [formGroup]="formStore.form" (ngSubmit)="login()">
         <div class="card has-text-left">
           <div class="card-header">
             <p class="card-header-title">
@@ -10,9 +10,24 @@
           </div>
 
           <div class="card-content">
-            <text-field label="Username"></text-field>
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.username"
+                  [errorMessage]="formStore.field.username.error"
+                  label="Username"
+                ></text-field>
+              </div>
 
-            <text-field label="Password" type="password"></text-field>
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.password"
+                  [errorMessage]="formStore.field.password.error"
+                  label="Password"
+                  type="password"
+                ></text-field>
+              </div>
+            </div>
           </div>
 
           <div class="card-footer">

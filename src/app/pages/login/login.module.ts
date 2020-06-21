@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from '@app/pages/login/login.component';
 
+import { TextFieldModule } from '@app/shared/components/text-field/text-field.module';
 import { PlainLayoutModule } from '@app/shared/layouts/plain-layout/plain-layout.module';
-import { TextFieldComponent } from '@app/shared/components/text-field/text-field.component';
+import { FormService } from '@app/shared/services/form/form.service';
 
 @NgModule({
-  declarations: [LoginComponent, TextFieldComponent],
+  declarations: [LoginComponent],
   imports: [
+    FormsModule,
     PlainLayoutModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -17,6 +21,8 @@ import { TextFieldComponent } from '@app/shared/components/text-field/text-field
         component: LoginComponent,
       },
     ]),
+    TextFieldModule,
   ],
+  providers: [FormService],
 })
 export class LoginModule {}
