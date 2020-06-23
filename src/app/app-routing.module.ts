@@ -16,14 +16,14 @@ const routes: Routes = [
         m => m.DashboardModule,
       );
     },
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'movie',
     loadChildren: () => {
       return import('@app/pages/movie/movie.module').then(m => m.MovieModule);
     },
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'theater',
@@ -32,7 +32,7 @@ const routes: Routes = [
         m => m.TheaterModule,
       );
     },
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'login',
