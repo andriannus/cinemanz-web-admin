@@ -1,8 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 import { LOGIN_FORM } from '@app/pages/login/login.constant';
+import { LoginUserOperation } from '@app/pages/login/login.model';
+import { LoginService } from '@app/pages/login/login.service';
 
+import { AUTH } from '@app/shared/constants/auth.constant';
 import { FormStore } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
 
@@ -15,7 +19,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private formService: FormService) {
+  constructor(
+    private formService: FormService,
+    private loginService: LoginService,
+    private router: Router,
+  ) {
     this.subscription = new Subscription();
   }
 
@@ -41,7 +49,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Call GraphQL API
+    const { email, password } = form.controls;
+
+    this.loginService
+      .login(email.value, password.value)
+      .subscribe(({ data }: { data: LoginUserOperation }) => {
+        const { result } = data.loginUser;
+
+        localStorage.setItem(AUTH.token, result.token);
+
+        this.router.navigate(['/dashboard'], {
+          replaceUrl: true,
+        });
+      });
   }
 
   private formServiceSubscription(): SubscriptionLike {
