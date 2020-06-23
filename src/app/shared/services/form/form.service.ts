@@ -32,7 +32,7 @@ export class FormService {
     this.dispatcher.next(newStore);
   }
 
-  setupForm(formValidation: FormValidation): void {
+  setup(formValidation: FormValidation): void {
     const rules = {};
 
     Object.keys(formValidation).forEach((field: string) => {
@@ -47,12 +47,12 @@ export class FormService {
     this.store.form.valueChanges.subscribe(() => this.handleValueChanges());
   }
 
-  validateForm(): void {
-    this.makeFormDirty();
+  validate(): void {
+    this.makeDirty();
     this.handleValueChanges();
   }
 
-  resetForm(): void {
+  reset(): void {
     const { field, form } = this.store;
 
     form.reset();
@@ -101,7 +101,7 @@ export class FormService {
     });
   }
 
-  private makeFormDirty(): void {
+  private makeDirty(): void {
     const { form } = this.store;
 
     Object.keys(form.controls).forEach((field: string) => {

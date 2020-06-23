@@ -30,14 +30,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   setupForm(): void {
-    this.formService.setupForm(LOGIN_FORM);
+    this.formService.setup(LOGIN_FORM);
   }
 
   login(): void {
     const { form } = this.formStore;
 
     if (form.invalid) {
-      this.formService.validateForm();
+      this.formService.validate();
       return;
     }
 
