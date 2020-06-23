@@ -1,10 +1,10 @@
 import { Validators } from '@angular/forms';
 
 export const LOGIN_FORM = {
-  username: {
+  email: {
     rules: ['', [Validators.required]],
     message: {
-      required: 'Username is required',
+      required: 'Email is required',
     },
     error: '',
   },
