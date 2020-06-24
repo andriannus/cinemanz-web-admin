@@ -1,14 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Subscription, SubscriptionLike } from 'rxjs';
+
+import { Theater, TheaterStore } from '@app/pages/theater/theater.model';
+import { TheaterService } from '@app/pages/theater/theater.service';
+
+import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 @Component({
   selector: 'theater',
   templateUrl: './theater.component.html',
 })
-export class TheaterComponent implements OnInit {
-  constructor(private titleService: Title) {}
+export class TheaterComponent implements OnInit, OnDestroy {
+  errorMessage: { fetchTheaters: string };
+  loading: { isFetchTheaters: boolean };
+  theaters: PaginatedData<Theater>;
+
+  private subscription: Subscription;
+
+  constructor(
+    private theaterService: TheaterService,
+    private titleService: Title,
+  ) {
+    this.errorMessage = { fetchTheaters: '' };
+    this.loading = { isFetchTheaters: false };
+    this.subscription = new Subscription();
+    this.theaters = null;
+  }
 
   ngOnInit(): void {
+    this.theaterService.fetchPaginatedTheaters();
+
     this.titleService.setTitle('Theater - CinemaNz Admin');
+
+    this.subscription.add(this.theaterStoreSubscription());
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  theaterStoreSubscription(): SubscriptionLike {
+    return this.theaterService.data$.subscribe((theaterStore: TheaterStore) => {
+      const { errorMessage, loading, theaters } = theaterStore;
+
+      this.errorMessage = errorMessage;
+      this.loading = loading;
+      this.theaters = theaters;
+    });
   }
 }

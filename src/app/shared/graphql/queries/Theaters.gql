@@ -1,0 +1,14 @@
+query Theaters($skip: Int!, $limit: Int!) {
+  theaters(skip: $skip, limit: $limit) {
+    access_time_in
+    access_time_out
+    results {
+      _id
+      address
+      name
+      telephone
+    }
+    status
+    total
+  }
+}
