@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { FetchResult } from 'apollo-link';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 import { LOGIN_FORM } from '@app/pages/login/login.constant';
@@ -57,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.loginService
       .login(email.value, password.value)
-      .subscribe(({ data }: { data: LoginUserOperation }) => {
+      .subscribe(({ data }: FetchResult<LoginUserOperation>) => {
         const { result } = data.loginUser;
 
         localStorage.setItem(AUTH.token, result.token);
