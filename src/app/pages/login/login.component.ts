@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
@@ -23,12 +24,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private loginService: LoginService,
     private router: Router,
+    private titleService: Title,
   ) {
     this.subscription = new Subscription();
   }
 
   ngOnInit(): void {
     this.setupForm();
+
+    this.titleService.setTitle('Dashboard - CinemaNz Admin');
 
     this.subscription.add(this.formServiceSubscription());
   }
