@@ -1,0 +1,15 @@
+query Movies($skip: Int!, $limit: Int!, $showing: ShowingMovie) {
+  movies(skip: $skip, limit: $limit, showing: $showing) {
+    status
+    results {
+      _id
+      end
+      minutes
+      start
+      title
+    }
+    total
+    access_time_in
+    access_time_out
+  }
+}
