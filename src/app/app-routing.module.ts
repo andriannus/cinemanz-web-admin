@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '@app/shared/guards/auth/auth.guard';
+import { NotAuthGuard } from '@app/shared/guards/auth/not-auth.guard';
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
     loadChildren: () => {
       return import('@app/pages/login/login.module').then(m => m.LoginModule);
     },
+    canLoad: [NotAuthGuard],
   },
   {
     path: '**',
