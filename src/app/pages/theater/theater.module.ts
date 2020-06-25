@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TheaterComponent } from '@app/pages/theater/theater.component';
 import { TheaterService } from '@app/pages/theater/theater.service';
@@ -13,6 +14,7 @@ import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.mo
   imports: [
     BaseLayoutModule,
     CommonModule,
+    FontAwesomeModule,
     PaginationModule,
     RouterModule.forChild([
       {

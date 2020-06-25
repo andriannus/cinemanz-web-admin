@@ -30,7 +30,25 @@
             {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
           </td>
           <td>{{ theater.name }}</td>
-          <td></td>
+          <td>
+            <div class="field is-grouped">
+              <p class="control">
+                <button class="button is-light">
+                  <span class="icon">
+                    <fa-icon [icon]="icon.edit"></fa-icon>
+                  </span>
+                </button>
+              </p>
+
+              <p class="control">
+                <button class="button is-danger">
+                  <span class="icon">
+                    <fa-icon [icon]="icon.delete"></fa-icon>
+                  </span>
+                </button>
+              </p>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
