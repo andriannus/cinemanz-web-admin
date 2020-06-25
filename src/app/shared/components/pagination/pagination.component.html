@@ -1,0 +1,25 @@
+<nav class="pagination">
+  <button
+    [disabled]="!meta.prevPage"
+    class="pagination-previous button"
+    type="button"
+    (click)="previous(meta.prevPage)"
+  >
+    Previous
+  </button>
+
+  <button
+    [disabled]="!meta.nextPage"
+    class="pagination-next button"
+    type="button"
+    (click)="next(meta.nextPage)"
+  >
+    Next page
+  </button>
+
+  <ul class="pagination-list">
+    <li>
+      <a class="pagination-link is-current">{{ meta.page }}</a>
+    </li>
+  </ul>
+</nav>
