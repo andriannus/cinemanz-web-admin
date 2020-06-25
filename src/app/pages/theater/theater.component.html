@@ -35,29 +35,10 @@
       </tbody>
     </table>
 
-    <nav class="pagination">
-      <button
-        [disabled]="!theaters.meta.prevPage"
-        class="pagination-previous button"
-        type="button"
-        (click)="fetchPaginatedTheaters(theaters.meta.prevPage)"
-      >
-        Previous
-      </button>
-      <button
-        [disabled]="!theaters.meta.nextPage"
-        class="pagination-next button"
-        type="button"
-        (click)="fetchPaginatedTheaters(theaters.meta.nextPage)"
-      >
-        Next page
-      </button>
-
-      <ul class="pagination-list">
-        <li>
-          <a class="pagination-link is-current">{{ theaters.meta.page }}</a>
-        </li>
-      </ul>
-    </nav>
+    <pagination
+      [meta]="theaters.meta"
+      (nextPageClicked)="fetchPaginatedTheaters($event)"
+      (previousPageClicked)="fetchPaginatedTheaters($event)"
+    ></pagination>
   </ng-template>
 </base-layout>

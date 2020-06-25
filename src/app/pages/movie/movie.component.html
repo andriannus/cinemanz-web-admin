@@ -33,29 +33,10 @@
       </tbody>
     </table>
 
-    <nav class="pagination">
-      <button
-        [disabled]="!movies.meta.prevPage"
-        class="pagination-previous button"
-        type="button"
-        (click)="fetchPaginatedMovies(movies.meta.prevPage)"
-      >
-        Previous
-      </button>
-      <button
-        [disabled]="!movies.meta.nextPage"
-        class="pagination-next button"
-        type="button"
-        (click)="fetchPaginatedMovies(movies.meta.nextPage)"
-      >
-        Next page
-      </button>
-
-      <ul class="pagination-list">
-        <li>
-          <a class="pagination-link is-current">{{ movies.meta.page }}</a>
-        </li>
-      </ul>
-    </nav>
+    <pagination
+      [meta]="movies.meta"
+      (nextPageClicked)="fetchPaginatedMovies($event)"
+      (previousPageClicked)="fetchPaginatedMovies($event)"
+    ></pagination>
   </ng-template>
 </base-layout>
