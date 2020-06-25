@@ -1,3 +1,61 @@
 <base-layout>
-  <p>movie works!</p>
+  <p *ngIf="loading.isFetchMovies; else content">Loading...</p>
+
+  <ng-template #content>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <h1 class="title">Movie</h1>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <button class="button is-info">Add Movie</button>
+        </div>
+      </div>
+    </nav>
+
+    <table class="table is-fullwidth is-striped">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Judul</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let movie of movies.data; let i = index">
+          <td>{{ (movies.meta.page - 1) * movies.meta.perPage + (i + 1) }}</td>
+          <td>{{ movie.title }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <nav class="pagination">
+      <button
+        [disabled]="!movies.meta.prevPage"
+        class="pagination-previous button"
+        type="button"
+        (click)="fetchPaginatedMovies(movies.meta.prevPage)"
+      >
+        Previous
+      </button>
+      <button
+        [disabled]="!movies.meta.nextPage"
+        class="pagination-next button"
+        type="button"
+        (click)="fetchPaginatedMovies(movies.meta.nextPage)"
+      >
+        Next page
+      </button>
+
+      <ul class="pagination-list">
+        <li>
+          <a class="pagination-link is-current">{{ movies.meta.page }}</a>
+        </li>
+      </ul>
+    </nav>
+  </ng-template>
 </base-layout>

@@ -26,15 +26,19 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle('Movie - CinemaNz Admin');
+    this.fetchPaginatedMovies();
 
-    this.movieService.fetchPaginatedMovies();
+    this.titleService.setTitle('Movie - CinemaNz Admin');
 
     this.subscription.add(this.movieStoreSubscription());
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  fetchPaginatedMovies(page: number = 1): void {
+    this.movieService.fetchPaginatedMovies(page);
   }
 
   movieStoreSubscription(): SubscriptionLike {

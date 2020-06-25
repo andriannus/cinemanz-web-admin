@@ -29,7 +29,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.theaterService.fetchPaginatedTheaters();
+    this.fetchPaginatedTheaters();
 
     this.titleService.setTitle('Theater - CinemaNz Admin');
 
@@ -38,6 +38,10 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  fetchPaginatedTheaters(page: number = 1): void {
+    this.theaterService.fetchPaginatedTheaters(page);
   }
 
   theaterStoreSubscription(): SubscriptionLike {

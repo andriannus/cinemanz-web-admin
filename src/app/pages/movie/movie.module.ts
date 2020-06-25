@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -10,6 +11,7 @@ import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.mo
   declarations: [MovieComponent],
   imports: [
     BaseLayoutModule,
+    CommonModule,
     RouterModule.forChild([
       {
         path: '',
