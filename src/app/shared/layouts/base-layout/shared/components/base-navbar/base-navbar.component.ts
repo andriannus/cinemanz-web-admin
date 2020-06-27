@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 
 import { AUTH } from '@app/shared/constants/auth.constant';
 
@@ -8,8 +9,11 @@ import { AUTH } from '@app/shared/constants/auth.constant';
   styleUrls: ['./base-navbar.component.scss'],
 })
 export class BaseNavbarComponent {
+  constructor(private apollo: Apollo) {}
+
   logout(): void {
     localStorage.removeItem(AUTH.token);
+    this.apollo.getClient().resetStore();
 
     window.location.href = '/login';
   }
