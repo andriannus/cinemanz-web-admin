@@ -1,0 +1,14 @@
+query Theater($id: ID!) {
+  theater(id: $id) {
+    status
+    message
+    result {
+      _id
+      address
+      name
+      telephone
+    }
+    access_time_in
+    access_time_out
+  }
+}
