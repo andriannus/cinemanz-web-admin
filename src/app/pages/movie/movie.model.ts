@@ -37,3 +37,13 @@ export interface MoviesResponse extends Response {
 export interface MoviesOperation {
   movies: MoviesResponse;
 }
+
+export interface DeleteMovieResponse extends Response {
+  result: {
+    id: string;
+  };
+}
+
+export interface DeleteMovieOperation {
+  deleteMovie: DeleteMovieResponse;
+}

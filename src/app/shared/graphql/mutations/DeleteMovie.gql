@@ -1,0 +1,9 @@
+mutation DeleteMovie($id: ID!) {
+  deleteMovie(id: $id) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

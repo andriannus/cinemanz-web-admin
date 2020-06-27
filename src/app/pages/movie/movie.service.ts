@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ApolloQueryResult } from 'apollo-client';
+import { FetchResult } from 'apollo-link';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { paginate } from '@app/shared/utils/pagination/pagination.util';
 import {
+  DeleteMovieOperation,
   Movie,
   MoviesOperation,
   MovieStore,
 } from '@app/pages/movie/movie.model';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
+import DeleteMovie from '@app/shared/graphql/mutations/DeleteMovie.gql';
 import Movies from '@app/shared/graphql/queries/Movies.gql';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
@@ -98,5 +101,14 @@ export class MovieService {
           });
         },
       );
+  }
+
+  deleteMovie(id: string): Observable<FetchResult<DeleteMovieOperation>> {
+    return this.apollo.mutate({
+      mutation: DeleteMovie,
+      variables: {
+        id,
+      },
+    });
   }
 }

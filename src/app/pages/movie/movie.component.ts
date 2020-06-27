@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { FetchResult } from 'apollo-link';
 import { Subscription, SubscriptionLike } from 'rxjs';
 import {
   faPencilAlt,
@@ -7,7 +8,11 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Movie, MovieStore } from '@app/pages/movie/movie.model';
+import {
+  Movie,
+  MovieStore,
+  DeleteMovieOperation,
+} from '@app/pages/movie/movie.model';
 import { MovieService } from '@app/pages/movie/movie.service';
 
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
@@ -20,7 +25,13 @@ export class MovieComponent implements OnInit, OnDestroy {
   errorMessage: { fetchMovies: string };
   icon: { edit: IconDefinition; delete: IconDefinition };
   loading: { isFetchMovies: boolean };
+  modal: {
+    isAdd: boolean;
+    isDelete: boolean;
+    isEdit: boolean;
+  };
   movies: PaginatedData<Movie>;
+  selectedMovie: Partial<Movie>;
 
   private subscription: Subscription;
 
@@ -30,9 +41,18 @@ export class MovieComponent implements OnInit, OnDestroy {
       edit: faPencilAlt,
       delete: faTrashAlt,
     };
+    this.modal = {
+      isAdd: false,
+      isDelete: false,
+      isEdit: false,
+    };
     this.movies = null;
     this.loading = { isFetchMovies: false };
     this.subscription = new Subscription();
+    this.selectedMovie = {
+      _id: '',
+      title: '',
+    };
   }
 
   ngOnInit(): void {
@@ -59,5 +79,29 @@ export class MovieComponent implements OnInit, OnDestroy {
       this.loading = loading;
       this.movies = movies;
     });
+  }
+
+  toggleModal(selectedModal: string): void {
+    this.modal[selectedModal] = !this.modal[selectedModal];
+  }
+
+  confirmDelete(movie: Movie): void {
+    this.modal.isDelete = true;
+    this.selectedMovie = movie;
+  }
+
+  delete(): void {
+    const { _id: id } = this.selectedMovie;
+
+    this.movieService
+      .deleteMovie(id)
+      .subscribe(({ data }: FetchResult<DeleteMovieOperation>) => {
+        const { result } = data.deleteMovie;
+
+        if (result) {
+          this.modal.isDelete = false;
+          this.fetchPaginatedMovies();
+        }
+      });
   }
 }
