@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ApolloQueryResult } from 'apollo-client';
+import { FetchResult } from 'apollo-link';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { paginate } from '@app/shared/utils/pagination/pagination.util';
 import {
+  DeleteTheaterOperation,
   Theater,
   TheatersOperation,
   TheaterStore,
 } from '@app/pages/theater/theater.model';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
+import DeleteTheater from '@app/shared/graphql/mutations/DeleteTheater.gql';
 import Theaters from '@app/shared/graphql/queries/Theaters.gql';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
@@ -101,5 +104,14 @@ export class TheaterService {
           });
         },
       );
+  }
+
+  deleteTheater(id: string): Observable<FetchResult<DeleteTheaterOperation>> {
+    return this.apollo.mutate({
+      mutation: DeleteTheater,
+      variables: {
+        id,
+      },
+    });
   }
 }

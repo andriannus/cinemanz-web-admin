@@ -41,7 +41,11 @@
               </p>
 
               <p class="control">
-                <button class="button is-danger">
+                <button
+                  class="button is-danger"
+                  type="button"
+                  (click)="confirmDelete(theater)"
+                >
                   <span class="icon">
                     <fa-icon [icon]="icon.delete"></fa-icon>
                   </span>
@@ -58,5 +62,37 @@
       (nextPageClicked)="fetchPaginatedTheaters($event)"
       (previousPageClicked)="fetchPaginatedTheaters($event)"
     ></pagination>
+
+    <modal [(isShow)]="modal.isDelete" width="360">
+      <div class="box">
+        <div class="mb-5">
+          <p>
+            This action
+            <strong>cannot</strong>
+            to be undone. This will permanently delete the
+            <b>{{ selectedTheater.name }}</b>
+            theater.
+          </p>
+        </div>
+
+        <div class="buttons is-right">
+          <button
+            class="button is-danger is-light"
+            type="button"
+            (click)="delete()"
+          >
+            Confirm
+          </button>
+
+          <button
+            class="button is-light"
+            type="button"
+            (click)="toggleModal('isDelete')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </modal>
   </ng-template>
 </base-layout>

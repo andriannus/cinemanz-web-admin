@@ -1,0 +1,9 @@
+mutation DeleteTheater($id: ID!) {
+  deleteTheater(id: $id) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

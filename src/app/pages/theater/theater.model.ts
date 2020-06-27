@@ -26,3 +26,13 @@ export interface TheatersResponse extends Response {
 export interface TheatersOperation {
   theaters: TheatersResponse;
 }
+
+export interface DeleteTheaterResponse extends Response {
+  result: {
+    id: string;
+  };
+}
+
+export interface DeleteTheaterOperation {
+  deleteTheater: DeleteTheaterResponse;
+}
