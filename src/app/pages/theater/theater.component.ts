@@ -148,7 +148,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
         const { result } = data.updateTheater;
 
         if (result) {
-          this.toggleModal(TheaterModal.Put);
+          this.cancel();
           this.fetchPaginatedTheaters();
         }
       });
@@ -163,7 +163,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
         const { result } = data.createTheater;
 
         if (result) {
-          this.toggleModal(TheaterModal.Put);
+          this.cancel();
           this.fetchPaginatedTheaters();
         }
       });
