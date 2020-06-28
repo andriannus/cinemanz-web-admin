@@ -11,11 +11,13 @@ import {
   Theater,
   TheatersOperation,
   TheaterStore,
+  UpdateTheaterOperation,
 } from '@app/pages/theater/theater.model';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
 import CreateTheater from '@app/shared/graphql/mutations/CreateTheater.gql';
 import DeleteTheater from '@app/shared/graphql/mutations/DeleteTheater.gql';
+import UpdateTheater from '@app/shared/graphql/mutations/UpdateTheater.gql';
 import Theaters from '@app/shared/graphql/queries/Theaters.gql';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
@@ -121,6 +123,15 @@ export class TheaterService {
     return this.apollo.mutate({
       mutation: CreateTheater,
       variables: { data },
+    });
+  }
+
+  updateTheater(
+    theater: Theater,
+  ): Observable<FetchResult<UpdateTheaterOperation>> {
+    return this.apollo.mutate({
+      mutation: UpdateTheater,
+      variables: { data: theater },
     });
   }
 

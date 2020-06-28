@@ -1,0 +1,9 @@
+mutation UpdateTheater($data: UpdateTheaterInput) {
+  updateTheater(data: $data) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

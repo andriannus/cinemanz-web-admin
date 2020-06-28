@@ -46,3 +46,13 @@ export interface CreateTheaterResponse extends Response {
 export interface CreateTheaterOperation {
   createTheater: CreateTheaterResponse;
 }
+
+export interface UpdateTheaterResponse extends Response {
+  result: {
+    _id: string;
+  };
+}
+
+export interface UpdateTheaterOperation {
+  updateTheater: UpdateTheaterResponse;
+}

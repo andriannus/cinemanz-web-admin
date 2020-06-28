@@ -11,10 +11,11 @@ import {
 import { THEATER_FORM } from '@app/pages/theater/theater.constant';
 import { TheaterModal } from '@app/pages/theater/theater.enum';
 import {
+  CreateTheaterOperation,
+  DeleteTheaterOperation,
   Theater,
   TheaterStore,
-  DeleteTheaterOperation,
-  CreateTheaterOperation,
+  UpdateTheaterOperation,
 } from '@app/pages/theater/theater.model';
 import { TheaterService } from '@app/pages/theater/theater.service';
 
@@ -106,6 +107,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
     this.isEdit = !!theater;
 
     if (theater) {
+      this.selectedTheater = theater;
+
       const { address, name, telephone } = theater;
 
       this.formService.patchValue({
@@ -127,14 +130,28 @@ export class TheaterComponent implements OnInit, OnDestroy {
     }
 
     if (this.isEdit) {
-      // submitEditedTheater();
+      const udpatedTheater = {
+        ...form.value,
+        _id: this.selectedTheater._id,
+      };
+
+      this.submitEditedTheater(udpatedTheater);
     } else {
       this.submitCreatedTheater(form.value);
     }
   }
 
-  submitEditedTheater(): void {
-    // Soon
+  submitEditedTheater(formValue: Theater): void {
+    this.theaterService
+      .updateTheater(formValue)
+      .subscribe(({ data }: FetchResult<UpdateTheaterOperation>) => {
+        const { result } = data.updateTheater;
+
+        if (result) {
+          this.toggleModal(TheaterModal.Put);
+          this.fetchPaginatedTheaters();
+        }
+      });
   }
 
   submitCreatedTheater(formValue: Theater): void {
