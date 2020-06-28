@@ -8,13 +8,18 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { THEATER_FORM } from '@app/pages/theater/theater.constant';
+import { TheaterModal } from '@app/pages/theater/theater.enum';
 import {
   Theater,
   TheaterStore,
   DeleteTheaterOperation,
+  CreateTheaterOperation,
 } from '@app/pages/theater/theater.model';
 import { TheaterService } from '@app/pages/theater/theater.service';
 
+import { FormStore } from '@app/shared/services/form/form.model';
+import { FormService } from '@app/shared/services/form/form.service';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 @Component({
@@ -23,12 +28,13 @@ import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 })
 export class TheaterComponent implements OnInit, OnDestroy {
   errorMessage: { fetchTheaters: string };
+  formStore: FormStore;
   icon: { edit: IconDefinition; delete: IconDefinition };
+  isEdit: boolean;
   loading: { isFetchTheaters: boolean };
   modal: {
-    isAdd: boolean;
     isDelete: boolean;
-    isEdit: boolean;
+    isPut: boolean;
   };
   selectedTheater: Theater;
   theaters: PaginatedData<Theater>;
@@ -36,6 +42,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
+    private formService: FormService,
     private theaterService: TheaterService,
     private titleService: Title,
   ) {
@@ -44,11 +51,11 @@ export class TheaterComponent implements OnInit, OnDestroy {
       edit: faPencilAlt,
       delete: faTrashAlt,
     };
+    this.isEdit = false;
     this.loading = { isFetchTheaters: false };
     this.modal = {
-      isAdd: false,
       isDelete: false,
-      isEdit: false,
+      isPut: false,
     };
     this.selectedTheater = {
       _id: '',
@@ -62,37 +69,92 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchPaginatedTheaters();
+    this.setupForm();
 
     this.titleService.setTitle('Theater - CinemaNz Admin');
 
     this.subscription.add(this.theaterStoreSubscription());
+    this.subscription.add(this.formServiceSubscription());
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
+  get TheaterModal() {
+    return TheaterModal;
+  }
+
   fetchPaginatedTheaters(page: number = 1): void {
     this.theaterService.fetchPaginatedTheaters(page);
   }
 
-  theaterStoreSubscription(): SubscriptionLike {
-    return this.theaterService.data$.subscribe((theaterStore: TheaterStore) => {
-      const { errorMessage, loading, theaters } = theaterStore;
-
-      this.errorMessage = errorMessage;
-      this.loading = loading;
-      this.theaters = theaters;
-    });
+  setupForm(): void {
+    this.formService.setup(THEATER_FORM);
   }
 
-  toggleModal(selectedModal: string): void {
+  toggleModal(selectedModal: TheaterModal): void {
     this.modal[selectedModal] = !this.modal[selectedModal];
   }
 
   confirmDelete(theater: Theater): void {
-    this.modal.isDelete = true;
     this.selectedTheater = theater;
+    this.toggleModal(TheaterModal.Delete);
+  }
+
+  put(theater: Theater = null): void {
+    this.isEdit = !!theater;
+
+    if (theater) {
+      const { address, name, telephone } = theater;
+
+      this.formService.patchValue({
+        address,
+        name,
+        telephone,
+      });
+    }
+
+    this.toggleModal(TheaterModal.Put);
+  }
+
+  handleSubmit(): void {
+    const { form } = this.formStore;
+
+    if (form.invalid) {
+      this.formService.validate();
+      return;
+    }
+
+    if (this.isEdit) {
+      // submitEditedTheater();
+    } else {
+      this.submitCreatedTheater(form.value);
+    }
+  }
+
+  submitEditedTheater(): void {
+    // Soon
+  }
+
+  submitCreatedTheater(formValue: Theater): void {
+    const { _id, ...createdTheater } = formValue;
+
+    this.theaterService
+      .createTheater(createdTheater)
+      .subscribe(({ data }: FetchResult<CreateTheaterOperation>) => {
+        const { result } = data.createTheater;
+
+        if (result) {
+          this.toggleModal(TheaterModal.Put);
+          this.fetchPaginatedTheaters();
+        }
+      });
+  }
+
+  cancel(): void {
+    this.toggleModal(TheaterModal.Put);
+    this.formService.reset();
   }
 
   delete(): void {
@@ -104,9 +166,25 @@ export class TheaterComponent implements OnInit, OnDestroy {
         const { result } = data.deleteTheater;
 
         if (result) {
-          this.modal.isDelete = false;
+          this.toggleModal(TheaterModal.Delete);
           this.fetchPaginatedTheaters();
         }
       });
+  }
+
+  private theaterStoreSubscription(): SubscriptionLike {
+    return this.theaterService.data$.subscribe((theaterStore: TheaterStore) => {
+      const { errorMessage, loading, theaters } = theaterStore;
+
+      this.errorMessage = errorMessage;
+      this.loading = loading;
+      this.theaters = theaters;
+    });
+  }
+
+  private formServiceSubscription(): SubscriptionLike {
+    return this.formService.data$.subscribe((formData: FormStore) => {
+      this.formStore = formData;
+    });
   }
 }

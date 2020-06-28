@@ -36,3 +36,13 @@ export interface DeleteTheaterResponse extends Response {
 export interface DeleteTheaterOperation {
   deleteTheater: DeleteTheaterResponse;
 }
+
+export interface CreateTheaterResponse extends Response {
+  result: {
+    _id: string;
+  };
+}
+
+export interface CreateTheaterOperation {
+  createTheater: CreateTheaterResponse;
+}

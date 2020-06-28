@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -8,7 +9,9 @@ import { TheaterService } from '@app/pages/theater/theater.service';
 
 import { ModalModule } from '@app/shared/components/modal/modal.module';
 import { PaginationModule } from '@app/shared/components/pagination/pagination.module';
+import { TextFieldModule } from '@app/shared/components/text-field/text-field.module';
 import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.module';
+import { FormService } from '@app/shared/services/form/form.service';
 
 @NgModule({
   declarations: [TheaterComponent],
@@ -16,15 +19,18 @@ import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.mo
     BaseLayoutModule,
     CommonModule,
     FontAwesomeModule,
+    FormsModule,
     ModalModule,
     PaginationModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
         component: TheaterComponent,
       },
     ]),
+    TextFieldModule,
   ],
-  providers: [TheaterService],
+  providers: [FormService, TheaterService],
 })
 export class TheaterModule {}

@@ -6,6 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { paginate } from '@app/shared/utils/pagination/pagination.util';
 import {
+  CreateTheaterOperation,
   DeleteTheaterOperation,
   Theater,
   TheatersOperation,
@@ -13,6 +14,7 @@ import {
 } from '@app/pages/theater/theater.model';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
+import CreateTheater from '@app/shared/graphql/mutations/CreateTheater.gql';
 import DeleteTheater from '@app/shared/graphql/mutations/DeleteTheater.gql';
 import Theaters from '@app/shared/graphql/queries/Theaters.gql';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
@@ -104,6 +106,22 @@ export class TheaterService {
           });
         },
       );
+  }
+
+  createTheater(
+    theater: Partial<Theater>,
+  ): Observable<FetchResult<CreateTheaterOperation>> {
+    const { address, name, telephone } = theater;
+    const data = {
+      address,
+      name,
+      telephone,
+    };
+
+    return this.apollo.mutate({
+      mutation: CreateTheater,
+      variables: { data },
+    });
   }
 
   deleteTheater(id: string): Observable<FetchResult<DeleteTheaterOperation>> {

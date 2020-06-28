@@ -1,0 +1,9 @@
+mutation CreateTheater($data: CreateTheaterInput) {
+  createTheater(data: $data) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

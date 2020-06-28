@@ -10,7 +10,9 @@
       </div>
       <div class="level-right">
         <div class="level-item">
-          <button class="button is-info">Add Theater</button>
+          <button class="button is-info" type="button" (click)="put()">
+            Add Theater
+          </button>
         </div>
       </div>
     </nav>
@@ -33,7 +35,11 @@
           <td>
             <div class="field is-grouped">
               <p class="control">
-                <button class="button is-light">
+                <button
+                  class="button is-light"
+                  type="button"
+                  (click)="put(theater)"
+                >
                   <span class="icon">
                     <fa-icon [icon]="icon.edit"></fa-icon>
                   </span>
@@ -87,12 +93,65 @@
           <button
             class="button is-light"
             type="button"
-            (click)="toggleModal('isDelete')"
+            (click)="toggleModal(TheaterModal.Delete)"
           >
             Cancel
           </button>
         </div>
       </div>
+    </modal>
+
+    <modal [(isShow)]="modal.isPut" width="480">
+      <form [formGroup]="formStore.form" (ngSubmit)="handleSubmit()">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              {{ isEdit ? 'Edit' : 'Add' }} Theater
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.name"
+                  [errorMessage]="formStore.field.name.error"
+                  label="Name"
+                  placeholder="The name of the theater"
+                ></text-field>
+              </div>
+
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.address"
+                  [errorMessage]="formStore.field.address.error"
+                  label="Address"
+                  placeholder="Where is the address?"
+                ></text-field>
+              </div>
+
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.telephone"
+                  [errorMessage]="formStore.field.telephone.error"
+                  label="Telephone"
+                  placeholder="How do i contact them?"
+                ></text-field>
+              </div>
+            </div>
+
+            <div class="buttons is-right">
+              <button class="button is-danger is-light" type="submit">
+                Confirm
+              </button>
+
+              <button class="button is-light" type="button" (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </modal>
   </ng-template>
 </base-layout>
