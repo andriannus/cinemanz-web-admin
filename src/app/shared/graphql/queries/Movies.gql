@@ -3,10 +3,20 @@ query Movies($skip: Int!, $limit: Int!, $showing: ShowingMovie) {
     status
     results {
       _id
+      casts
+      director
       end
+      genres
       minutes
+      poster
+      producers
+      production
+      rate
       start
+      synopsis
+      theaters
       title
+      writer
     }
     total
     access_time_in
