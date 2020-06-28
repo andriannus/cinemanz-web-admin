@@ -1,0 +1,9 @@
+mutation CreateMovie($data: CreateMovieInput) {
+  createMovie(data: $data) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

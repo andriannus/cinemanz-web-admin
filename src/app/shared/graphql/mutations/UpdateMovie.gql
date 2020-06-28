@@ -1,0 +1,9 @@
+mutation UpdateMovie($data: UpdateMovieInput) {
+  updateMovie(data: $data) {
+    status
+    message
+    result {
+      _id
+    }
+  }
+}

@@ -47,3 +47,23 @@ export interface DeleteMovieResponse extends Response {
 export interface DeleteMovieOperation {
   deleteMovie: DeleteMovieResponse;
 }
+
+export interface CreateMovieResponse extends Response {
+  result: {
+    _id: string;
+  };
+}
+
+export interface CreateMovieOperation {
+  createMovie: CreateMovieResponse;
+}
+
+export interface UpdateMovieResponse extends Response {
+  result: {
+    _id: string;
+  };
+}
+
+export interface UpdateMovieOperation {
+  updateMovie: UpdateMovieResponse;
+}

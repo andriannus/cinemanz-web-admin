@@ -10,7 +10,9 @@
       </div>
       <div class="level-right">
         <div class="level-item">
-          <button class="button is-info">Add Movie</button>
+          <button class="button is-info" type="button" (click)="put()">
+            Add Movie
+          </button>
         </div>
       </div>
     </nav>
@@ -31,7 +33,11 @@
           <td>
             <div class="field is-grouped">
               <p class="control">
-                <button class="button is-light">
+                <button
+                  class="button is-light"
+                  type="button"
+                  (click)="put(movie)"
+                >
                   <span class="icon">
                     <fa-icon [icon]="icon.edit"></fa-icon>
                   </span>
@@ -91,6 +97,124 @@
           </button>
         </div>
       </div>
+    </modal>
+
+    <modal [(isShow)]="modal.isPut" width="600">
+      <form [formGroup]="formStore.form" (ngSubmit)="handleSubmit()">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              {{ isEdit ? 'Edit' : 'Add' }} Movie
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.title"
+                  [errorMessage]="formStore.field.title.error"
+                  label="Title"
+                  placeholder="The title of the movie"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.genres"
+                  [errorMessage]="formStore.field.genres.error"
+                  label="Genres"
+                  placeholder="What are the genres?"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.producers"
+                  [errorMessage]="formStore.field.producers.error"
+                  label="Producers"
+                  placeholder="How about Sule, Nunung?"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.director"
+                  [errorMessage]="formStore.field.director.error"
+                  label="Director"
+                  placeholder="How about the director?"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.writer"
+                  [errorMessage]="formStore.field.writer.error"
+                  label="Writer"
+                  placeholder="Who made the scenario?"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.production"
+                  [errorMessage]="formStore.field.production.error"
+                  label="Production"
+                  placeholder="Who produced this film?"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.casts"
+                  [errorMessage]="formStore.field.casts.error"
+                  label="Cast"
+                  placeholder="Let's fill in the cast"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.start"
+                  [errorMessage]="formStore.field.start.error"
+                  label="Date Start"
+                  placeholder="Let's fill in the cast"
+                  type="date"
+                ></text-field>
+              </div>
+
+              <div class="column is-6">
+                <text-field
+                  [controlRef]="formStore.form.controls.end"
+                  [errorMessage]="formStore.field.end.error"
+                  label="Date End"
+                  placeholder="Let's fill in the cast"
+                  type="date"
+                ></text-field>
+              </div>
+
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formStore.form.controls.synopsis"
+                  [errorMessage]="formStore.field.synopsis.error"
+                  label="Synopsis"
+                  placeholder="Synopsis of this movie"
+                ></text-field>
+              </div>
+            </div>
+
+            <div class="buttons is-right">
+              <button class="button is-info is-light" type="submit">
+                Submit
+              </button>
+
+              <button class="button is-light" type="button" (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </modal>
   </ng-template>
 </base-layout>

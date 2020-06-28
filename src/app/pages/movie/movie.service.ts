@@ -6,14 +6,18 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { paginate } from '@app/shared/utils/pagination/pagination.util';
 import {
+  CreateMovieOperation,
   DeleteMovieOperation,
   Movie,
   MoviesOperation,
   MovieStore,
+  UpdateMovieOperation,
 } from '@app/pages/movie/movie.model';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
+import CreateMovie from '@app/shared/graphql/mutations/CreateMovie.gql';
 import DeleteMovie from '@app/shared/graphql/mutations/DeleteMovie.gql';
+import UpdateMovie from '@app/shared/graphql/mutations/UpdateMovie.gql';
 import Movies from '@app/shared/graphql/queries/Movies.gql';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
@@ -101,6 +105,24 @@ export class MovieService {
           });
         },
       );
+  }
+
+  createMovie(
+    movie: Partial<Movie>,
+  ): Observable<FetchResult<CreateMovieOperation>> {
+    const { _id, ...data } = movie;
+
+    return this.apollo.mutate({
+      mutation: CreateMovie,
+      variables: { data },
+    });
+  }
+
+  updateMovie(movie: Movie): Observable<FetchResult<UpdateMovieOperation>> {
+    return this.apollo.mutate({
+      mutation: UpdateMovie,
+      variables: { data: movie },
+    });
   }
 
   deleteMovie(id: string): Observable<FetchResult<DeleteMovieOperation>> {
