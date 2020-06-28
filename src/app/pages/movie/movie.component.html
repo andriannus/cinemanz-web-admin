@@ -2,70 +2,74 @@
   <p *ngIf="loading.isFetchMovies; else content">Loading...</p>
 
   <ng-template #content>
-    <nav class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">Movie</h1>
+    <ng-container *ngIf="movies.data.length; else notFound">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <h1 class="title">Movie</h1>
+          </div>
         </div>
-      </div>
-      <div class="level-right">
-        <div class="level-item">
-          <button class="button is-info" type="button" (click)="put()">
-            Add Movie
-          </button>
+        <div class="level-right">
+          <div class="level-item">
+            <button class="button is-info" type="button" (click)="put()">
+              Add Movie
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-    <table class="table is-fullwidth is-striped">
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Judul</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+      <table class="table is-fullwidth is-striped">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Judul</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr *ngFor="let movie of movies.data; let i = index">
-          <td>{{ (movies.meta.page - 1) * movies.meta.perPage + (i + 1) }}</td>
-          <td>{{ movie.title }}</td>
-          <td>
-            <div class="field is-grouped">
-              <p class="control">
-                <button
-                  class="button is-light"
-                  type="button"
-                  (click)="put(movie)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.edit"></fa-icon>
-                  </span>
-                </button>
-              </p>
+        <tbody>
+          <tr *ngFor="let movie of movies.data; let i = index">
+            <td>
+              {{ (movies.meta.page - 1) * movies.meta.perPage + (i + 1) }}
+            </td>
+            <td>{{ movie.title }}</td>
+            <td>
+              <div class="field is-grouped">
+                <p class="control">
+                  <button
+                    class="button is-light"
+                    type="button"
+                    (click)="put(movie)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.edit"></fa-icon>
+                    </span>
+                  </button>
+                </p>
 
-              <p class="control">
-                <button
-                  class="button is-danger"
-                  type="button"
-                  (click)="confirmDelete(movie)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.delete"></fa-icon>
-                  </span>
-                </button>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <p class="control">
+                  <button
+                    class="button is-danger"
+                    type="button"
+                    (click)="confirmDelete(movie)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.delete"></fa-icon>
+                    </span>
+                  </button>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <pagination
-      [meta]="movies.meta"
-      (nextPageClicked)="fetchPaginatedMovies($event)"
-      (previousPageClicked)="fetchPaginatedMovies($event)"
-    ></pagination>
+      <pagination
+        [meta]="movies.meta"
+        (nextPageClicked)="fetchPaginatedMovies($event)"
+        (previousPageClicked)="fetchPaginatedMovies($event)"
+      ></pagination>
+    </ng-container>
 
     <modal [(isShow)]="modal.isDelete" width="360">
       <div class="box">
@@ -216,5 +220,13 @@
         </div>
       </form>
     </modal>
+  </ng-template>
+
+  <ng-template #notFound>
+    <p class="mb-3">Data not found</p>
+
+    <button class="button is-info" type="button" (click)="put()">
+      Add Movie
+    </button>
   </ng-template>
 </base-layout>

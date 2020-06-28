@@ -2,72 +2,74 @@
   <p *ngIf="loading.isFetchTheaters; else content">Loading...</p>
 
   <ng-template #content>
-    <nav class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">Theater</h1>
+    <ng-container *ngIf="theaters.data.length; else notFound">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <h1 class="title">Theater</h1>
+          </div>
         </div>
-      </div>
-      <div class="level-right">
-        <div class="level-item">
-          <button class="button is-info" type="button" (click)="put()">
-            Add Theater
-          </button>
+        <div class="level-right">
+          <div class="level-item">
+            <button class="button is-info" type="button" (click)="put()">
+              Add Theater
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-    <table class="table is-fullwidth is-striped">
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+      <table class="table is-fullwidth is-striped">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr *ngFor="let theater of theaters.data; let i = index">
-          <td>
-            {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
-          </td>
-          <td>{{ theater.name }}</td>
-          <td>
-            <div class="field is-grouped">
-              <p class="control">
-                <button
-                  class="button is-light"
-                  type="button"
-                  (click)="put(theater)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.edit"></fa-icon>
-                  </span>
-                </button>
-              </p>
+        <tbody>
+          <tr *ngFor="let theater of theaters.data; let i = index">
+            <td>
+              {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
+            </td>
+            <td>{{ theater.name }}</td>
+            <td>
+              <div class="field is-grouped">
+                <p class="control">
+                  <button
+                    class="button is-light"
+                    type="button"
+                    (click)="put(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.edit"></fa-icon>
+                    </span>
+                  </button>
+                </p>
 
-              <p class="control">
-                <button
-                  class="button is-danger"
-                  type="button"
-                  (click)="confirmDelete(theater)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.delete"></fa-icon>
-                  </span>
-                </button>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <p class="control">
+                  <button
+                    class="button is-danger"
+                    type="button"
+                    (click)="confirmDelete(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.delete"></fa-icon>
+                    </span>
+                  </button>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <pagination
-      [meta]="theaters.meta"
-      (nextPageClicked)="fetchPaginatedTheaters($event)"
-      (previousPageClicked)="fetchPaginatedTheaters($event)"
-    ></pagination>
+      <pagination
+        [meta]="theaters.meta"
+        (nextPageClicked)="fetchPaginatedTheaters($event)"
+        (previousPageClicked)="fetchPaginatedTheaters($event)"
+      ></pagination>
+    </ng-container>
 
     <modal [(isShow)]="modal.isDelete" width="360">
       <div class="box">
@@ -153,5 +155,13 @@
         </div>
       </form>
     </modal>
+  </ng-template>
+
+  <ng-template #notFound>
+    <p class="mb-3">Data not found</p>
+
+    <button class="button is-info" type="button" (click)="put()">
+      Add Theater
+    </button>
   </ng-template>
 </base-layout>
