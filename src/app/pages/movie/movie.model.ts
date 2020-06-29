@@ -34,36 +34,24 @@ export interface MoviesResponse extends Response {
   total: number;
 }
 
-export interface MoviesOperation {
-  movies: MoviesResponse;
-}
-
-export interface DeleteMovieResponse extends Response {
+export interface ReformTheaterResponse extends Response {
   result: {
     id: string;
   };
 }
 
-export interface DeleteMovieOperation {
-  deleteMovie: DeleteMovieResponse;
+export interface MoviesOperation {
+  movies: MoviesResponse;
 }
 
-export interface CreateMovieResponse extends Response {
-  result: {
-    _id: string;
-  };
+export interface DeleteMovieOperation {
+  deleteMovie: ReformTheaterResponse;
 }
 
 export interface CreateMovieOperation {
-  createMovie: CreateMovieResponse;
-}
-
-export interface UpdateMovieResponse extends Response {
-  result: {
-    _id: string;
-  };
+  createMovie: ReformTheaterResponse;
 }
 
 export interface UpdateMovieOperation {
-  updateMovie: UpdateMovieResponse;
+  updateMovie: ReformTheaterResponse;
 }

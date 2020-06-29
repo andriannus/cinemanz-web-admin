@@ -23,36 +23,24 @@ export interface TheatersResponse extends Response {
   total: number;
 }
 
-export interface TheatersOperation {
-  theaters: TheatersResponse;
-}
-
-export interface DeleteTheaterResponse extends Response {
+export interface ReformTheaterResponse extends Response {
   result: {
     id: string;
   };
 }
 
-export interface DeleteTheaterOperation {
-  deleteTheater: DeleteTheaterResponse;
+export interface TheatersOperation {
+  theaters: TheatersResponse;
 }
 
-export interface CreateTheaterResponse extends Response {
-  result: {
-    _id: string;
-  };
+export interface DeleteTheaterOperation {
+  deleteTheater: ReformTheaterResponse;
 }
 
 export interface CreateTheaterOperation {
-  createTheater: CreateTheaterResponse;
-}
-
-export interface UpdateTheaterResponse extends Response {
-  result: {
-    _id: string;
-  };
+  createTheater: ReformTheaterResponse;
 }
 
 export interface UpdateTheaterOperation {
-  updateTheater: UpdateTheaterResponse;
+  updateTheater: ReformTheaterResponse;
 }
