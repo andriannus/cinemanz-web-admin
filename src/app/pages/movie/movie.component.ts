@@ -165,7 +165,6 @@ export class MovieComponent implements OnInit, OnDestroy {
     this.isEdit = !!movie;
 
     if (movie) {
-      console.log('Movie: ', movie);
       this.selectedMovie = movie;
 
       const { _id, ...selectedMovie } = movie;
