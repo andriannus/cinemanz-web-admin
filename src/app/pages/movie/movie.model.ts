@@ -1,14 +1,16 @@
 import { Response } from '@app/shared/models/response.model';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
-export interface MovieStore {
-  errorMessage: {
-    fetchMovies: string;
-  };
-  loading: {
-    isFetchMovies: boolean;
-  };
+export interface MovieState {
   movies: PaginatedData<Movie>;
+}
+
+export interface MovieErrorMessageState {
+  fetchMovies: string;
+}
+
+export interface MovieLoadingState {
+  isFetchMovies: boolean;
 }
 
 export interface Movie {

@@ -7,6 +7,7 @@ import {
   faTrashAlt,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { map } from 'rxjs/operators';
 
 import { MOVIE_FORM } from '@app/pages/movie/movie.constant';
 import { MovieModal } from '@app/pages/movie/movie.enum';
@@ -14,13 +15,17 @@ import {
   CreateMovieOperation,
   DeleteMovieOperation,
   Movie,
-  MovieStore,
+  MovieErrorMessageState,
+  MovieLoadingState,
   UpdateMovieOperation,
 } from '@app/pages/movie/movie.model';
 import { MovieService } from '@app/pages/movie/movie.service';
+import { MovieStore } from '@app/pages/movie/movie.store';
 
 import { FormStore } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
+import { ErrorMessageStore } from '@app/shared/store/error-message';
+import { LoadingStore } from '@app/shared/store/loading';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 @Component({
@@ -43,8 +48,11 @@ export class MovieComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
+    private errorMessageStore: ErrorMessageStore<MovieErrorMessageState>,
     private formService: FormService,
+    private loadingStore: LoadingStore<MovieLoadingState>,
     private movieService: MovieService,
+    private movieStore: MovieStore,
     private titleService: Title,
   ) {
     this.errorMessage = { fetchMovies: '' };
@@ -73,7 +81,9 @@ export class MovieComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle('Movie - CinemaNz Admin');
 
-    this.subscription.add(this.movieStoreSubscription());
+    this.subscription.add(this.movieStateSubscription());
+    this.subscription.add(this.errorMessageStateSubscription());
+    this.subscription.add(this.loadingStateSubscription());
     this.subscription.add(this.formServiceSubscription());
   }
 
@@ -181,14 +191,28 @@ export class MovieComponent implements OnInit, OnDestroy {
       });
   }
 
-  private movieStoreSubscription(): SubscriptionLike {
-    return this.movieService.data$.subscribe((movieStore: MovieStore) => {
-      const { errorMessage, loading, movies } = movieStore;
+  private movieStateSubscription(): SubscriptionLike {
+    return this.movieStore.state$
+      .pipe(map(({ movies }) => movies))
+      .subscribe((movies: PaginatedData<Movie>) => {
+        this.movies = movies;
+      });
+  }
 
-      this.errorMessage = errorMessage;
-      this.loading = loading;
-      this.movies = movies;
-    });
+  private errorMessageStateSubscription(): SubscriptionLike {
+    return this.errorMessageStore.state$.subscribe(
+      (errorMessageState: MovieErrorMessageState) => {
+        this.errorMessage = errorMessageState;
+      },
+    );
+  }
+
+  private loadingStateSubscription(): SubscriptionLike {
+    return this.loadingStore.state$.subscribe(
+      (loadingState: MovieLoadingState) => {
+        this.loading = loadingState;
+      },
+    );
   }
 
   private formServiceSubscription(): SubscriptionLike {

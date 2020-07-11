@@ -1,5 +1,21 @@
 import { Validators } from '@angular/forms';
 
+import { MovieState } from '@app/pages/movie/movie.model';
+
+export const MOVIE_STATE: MovieState = {
+  movies: {
+    data: [],
+    meta: {
+      nextPage: 0,
+      page: 0,
+      perPage: 0,
+      prevPage: 0,
+      total: 0,
+      totalPage: 0,
+    },
+  },
+};
+
 export const MOVIE_FORM = {
   casts: {
     rules: ['', [Validators.required]],
