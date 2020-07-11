@@ -38,6 +38,10 @@ export class ModalComponent implements OnChanges, OnDestroy {
     }
   }
 
+  ngOnDestroy(): void {
+    this.html.classList.remove('is-clipped');
+  }
+
   handleIsShowChanges(isShow: SimpleChange): void {
     this.isShow = isShow.currentValue;
 
@@ -62,9 +66,5 @@ export class ModalComponent implements OnChanges, OnDestroy {
     }
 
     this.width = `${currentValue}px`;
-  }
-
-  ngOnDestroy(): void {
-    this.html.classList.remove('is-clipped');
   }
 }
