@@ -7,6 +7,7 @@ import {
   faTrashAlt,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { map } from 'rxjs/operators';
 
 import { THEATER_FORM } from '@app/pages/theater/theater.constant';
 import { TheaterModal } from '@app/pages/theater/theater.enum';
@@ -14,13 +15,17 @@ import {
   CreateTheaterOperation,
   DeleteTheaterOperation,
   Theater,
-  TheaterStore,
+  TheaterErrorMessageState,
+  TheaterLoadingState,
   UpdateTheaterOperation,
 } from '@app/pages/theater/theater.model';
 import { TheaterService } from '@app/pages/theater/theater.service';
+import { TheaterStore } from '@app/pages/theater/theater.store';
 
 import { FormStore } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
+import { ErrorMessageStore } from '@app/shared/store/error-message';
+import { LoadingStore } from '@app/shared/store/loading';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 @Component({
@@ -43,8 +48,11 @@ export class TheaterComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
+    private errorMessageStore: ErrorMessageStore<TheaterErrorMessageState>,
     private formService: FormService,
+    private loadingStore: LoadingStore<TheaterLoadingState>,
     private theaterService: TheaterService,
+    private theaterStore: TheaterStore,
     private titleService: Title,
   ) {
     this.errorMessage = { fetchTheaters: '' };
@@ -74,7 +82,9 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle('Theater - CinemaNz Admin');
 
-    this.subscription.add(this.theaterStoreSubscription());
+    this.subscription.add(this.theaterStateSubscription());
+    this.subscription.add(this.errorMessageStateSubscription());
+    this.subscription.add(this.loadingStateSubscription());
     this.subscription.add(this.formServiceSubscription());
   }
 
@@ -189,14 +199,28 @@ export class TheaterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private theaterStoreSubscription(): SubscriptionLike {
-    return this.theaterService.data$.subscribe((theaterStore: TheaterStore) => {
-      const { errorMessage, loading, theaters } = theaterStore;
+  private theaterStateSubscription(): SubscriptionLike {
+    return this.theaterStore.state$
+      .pipe(map(({ theaters }) => theaters))
+      .subscribe((theaters: PaginatedData<Theater>) => {
+        this.theaters = theaters;
+      });
+  }
 
-      this.errorMessage = errorMessage;
-      this.loading = loading;
-      this.theaters = theaters;
-    });
+  private errorMessageStateSubscription(): SubscriptionLike {
+    return this.errorMessageStore.state$.subscribe(
+      (errorMessageState: TheaterErrorMessageState) => {
+        this.errorMessage = errorMessageState;
+      },
+    );
+  }
+
+  private loadingStateSubscription(): SubscriptionLike {
+    return this.loadingStore.state$.subscribe(
+      (loadingState: TheaterLoadingState) => {
+        this.loading = loadingState;
+      },
+    );
   }
 
   private formServiceSubscription(): SubscriptionLike {

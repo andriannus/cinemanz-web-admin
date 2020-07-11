@@ -2,64 +2,42 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { paginate } from '@app/shared/utils/pagination/pagination.util';
 import {
   CreateTheaterOperation,
   DeleteTheaterOperation,
   Theater,
+  TheaterErrorMessageState,
+  TheaterLoadingState,
   TheatersOperation,
-  TheaterStore,
   UpdateTheaterOperation,
 } from '@app/pages/theater/theater.model';
+import { TheaterStore } from '@app/pages/theater/theater.store';
 
 import { DATA_PER_PAGE } from '@app/shared/constants/data.constant';
 import CreateTheater from '@app/shared/graphql/mutations/CreateTheater.gql';
 import DeleteTheater from '@app/shared/graphql/mutations/DeleteTheater.gql';
 import UpdateTheater from '@app/shared/graphql/mutations/UpdateTheater.gql';
 import Theaters from '@app/shared/graphql/queries/Theaters.gql';
+import { ErrorMessageStore } from '@app/shared/store/error-message';
+import { LoadingStore } from '@app/shared/store/loading';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
 @Injectable()
 export class TheaterService {
-  data$: Observable<TheaterStore>;
-
-  private dispatcher: BehaviorSubject<TheaterStore>;
-  private store: TheaterStore;
-
-  constructor(private apollo: Apollo) {
-    this.store = {
-      errorMessage: {
-        fetchTheaters: '',
-      },
-      loading: {
-        isFetchTheaters: false,
-      },
-      theaters: null,
-    };
-
-    this.dispatcher = new BehaviorSubject({}) as BehaviorSubject<TheaterStore>;
-    this.data$ = this.dispatcher.asObservable();
-
-    this.dispatcher.next(this.store);
-  }
-
-  private setStore(store: Partial<TheaterStore>): void {
-    const newStore = Object.assign(this.store, store);
-
-    this.dispatcher.next(newStore);
-  }
+  constructor(
+    private apollo: Apollo,
+    private errorMessageStore: ErrorMessageStore<TheaterErrorMessageState>,
+    private loadingStore: LoadingStore<TheaterLoadingState>,
+    private theaterStore: TheaterStore,
+  ) {}
 
   fetchPaginatedTheaters(page: number = 1): void {
     const skip = (page - 1) * DATA_PER_PAGE;
 
-    this.setStore({
-      loading: {
-        ...this.store.loading,
-        isFetchTheaters: true,
-      },
-    });
+    this.loadingStore.set({ isFetchTheaters: true });
 
     this.apollo
       .watchQuery({
@@ -83,29 +61,14 @@ export class TheaterService {
             options,
           );
 
-          this.setStore({
-            errorMessage: {
-              ...this.store.errorMessage,
-              fetchTheaters: '',
-            },
-            loading: {
-              ...this.store.loading,
-              isFetchTheaters: false,
-            },
-            theaters: paginatedTheaters,
-          });
+          this.theaterStore.setTheaters(paginatedTheaters);
+
+          this.errorMessageStore.set({ fetchTheaters: '' });
+          this.loadingStore.set({ isFetchTheaters: false });
         },
         () => {
-          this.setStore({
-            errorMessage: {
-              ...this.store.errorMessage,
-              fetchTheaters: 'Something wrong.',
-            },
-            loading: {
-              ...this.store.loading,
-              isFetchTheaters: true,
-            },
-          });
+          this.errorMessageStore.set({ fetchTheaters: 'Something wrong.' });
+          this.loadingStore.set({ isFetchTheaters: false });
         },
       );
   }

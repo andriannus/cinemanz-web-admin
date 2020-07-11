@@ -1,14 +1,16 @@
 import { Response } from '@app/shared/models/response.model';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
-export interface TheaterStore {
-  errorMessage: {
-    fetchTheaters: string;
-  };
-  loading: {
-    isFetchTheaters: boolean;
-  };
+export interface TheaterState {
   theaters: PaginatedData<Theater>;
+}
+
+export interface TheaterErrorMessageState {
+  fetchTheaters: string;
+}
+
+export interface TheaterLoadingState {
+  isFetchTheaters: boolean;
 }
 
 export interface Theater {
