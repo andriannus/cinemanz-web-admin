@@ -15,6 +15,7 @@ import { MovieStore } from '@app/pages/movie/movie.store';
 import { ModalModule } from '@app/shared/components/modal/modal.module';
 import { PaginationModule } from '@app/shared/components/pagination/pagination.module';
 import { TextFieldModule } from '@app/shared/components/text-field/text-field.module';
+import { TextareaFieldModule } from '@app/shared/components/textarea-field/textarea-field.module';
 import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.module';
 import { FormService } from '@app/shared/services/form/form.service';
 import { ErrorMessageStore } from '@app/shared/store/error-message';
@@ -37,6 +38,7 @@ import { LoadingStore } from '@app/shared/store/loading';
       },
     ]),
     TextFieldModule,
+    TextareaFieldModule,
   ],
   providers: [
     FormService,
