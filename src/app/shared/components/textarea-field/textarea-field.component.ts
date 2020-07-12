@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'textarea-field',
   templateUrl: './textarea-field.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextareaFieldComponent {
   @Input()

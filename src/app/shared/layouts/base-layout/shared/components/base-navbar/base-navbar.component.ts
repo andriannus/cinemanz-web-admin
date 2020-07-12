@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import { AUTH } from '@app/shared/constants/auth.constant';
@@ -7,6 +7,7 @@ import { AUTH } from '@app/shared/constants/auth.constant';
   selector: 'base-navbar',
   templateUrl: './base-navbar.component.html',
   styleUrls: ['./base-navbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BaseNavbarComponent {
   constructor(private apollo: Apollo) {}

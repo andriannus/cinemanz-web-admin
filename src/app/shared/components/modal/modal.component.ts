@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -10,6 +11,7 @@ import {
 @Component({
   selector: 'modal',
   templateUrl: './modal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent implements OnChanges, OnDestroy {
   @Input()

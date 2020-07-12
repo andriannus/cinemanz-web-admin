@@ -1,8 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'base-layout',
   templateUrl: './base-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BaseLayoutComponent implements OnInit, OnDestroy {
   html: HTMLElement;

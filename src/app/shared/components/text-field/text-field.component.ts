@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'text-field',
   templateUrl: './text-field.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextFieldComponent {
   @Input()
