@@ -9,7 +9,7 @@ import { LoginUserOperation } from '@app/pages/login/login.model';
 import { LoginService } from '@app/pages/login/login.service';
 
 import { AUTH } from '@app/shared/constants/auth.constant';
-import { FormStore } from '@app/shared/services/form/form.model';
+import { FormState } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { FormService } from '@app/shared/services/form/form.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  formStore: FormStore;
+  formState: FormState;
 
   private subscription: Subscription;
 
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle('Dashboard - CinemaNz Admin');
 
-    this.subscription.add(this.formServiceSubscription());
+    this.subscription.add(this.formStateSubscription());
   }
 
   ngOnDestroy(): void {
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    const { form } = this.formStore;
+    const { form } = this.formState;
 
     if (form.invalid) {
       this.formService.validate();
@@ -70,9 +70,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
   }
 
-  private formServiceSubscription(): SubscriptionLike {
-    return this.formService.data$.subscribe((formData: FormStore) => {
-      this.formStore = formData;
+  private formStateSubscription(): SubscriptionLike {
+    return this.formService.state$.subscribe((formState: FormState) => {
+      this.formState = formState;
     });
   }
 }

@@ -21,7 +21,7 @@ import {
 import { MovieService } from '@app/pages/movie/movie.service';
 import { MovieStore } from '@app/pages/movie/movie.store';
 
-import { FormStore } from '@app/shared/services/form/form.model';
+import { FormState } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
 import { ErrorMessageStore } from '@app/shared/store/error-message';
 import { LoadingStore } from '@app/shared/store/loading';
@@ -33,7 +33,7 @@ import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 })
 export class MovieComponent implements OnInit, OnDestroy {
   errorMessage: { fetchMovies: string };
-  formStore: FormStore;
+  formState: FormState;
   icon: { edit: IconDefinition; delete: IconDefinition };
   isEdit: boolean;
   loading: { isFetchMovies: boolean };
@@ -55,7 +55,7 @@ export class MovieComponent implements OnInit, OnDestroy {
     private titleService: Title,
   ) {
     this.errorMessage = { fetchMovies: '' };
-    this.formStore = null;
+    this.formState = null;
     this.icon = {
       edit: faPencilAlt,
       delete: faTrashAlt,
@@ -83,7 +83,7 @@ export class MovieComponent implements OnInit, OnDestroy {
     this.subscription.add(this.movieStateSubscription());
     this.subscription.add(this.errorMessageStateSubscription());
     this.subscription.add(this.loadingStateSubscription());
-    this.subscription.add(this.formServiceSubscription());
+    this.subscription.add(this.formStateSubscription());
   }
 
   ngOnDestroy(): void {
@@ -113,7 +113,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit(): void {
-    const { form } = this.formStore;
+    const { form } = this.formState;
 
     if (form.invalid) {
       this.formService.validate();
@@ -217,9 +217,9 @@ export class MovieComponent implements OnInit, OnDestroy {
     );
   }
 
-  private formServiceSubscription(): SubscriptionLike {
-    return this.formService.data$.subscribe((formData: FormStore) => {
-      this.formStore = formData;
+  private formStateSubscription(): SubscriptionLike {
+    return this.formService.state$.subscribe((formState: FormState) => {
+      this.formState = formState;
     });
   }
 }

@@ -105,7 +105,7 @@
     </modal>
 
     <modal [(isShow)]="modal.isPut" width="600">
-      <form [formGroup]="formStore.form" (ngSubmit)="handleSubmit()">
+      <form [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
         <div class="card">
           <div class="card-header">
             <div class="card-header-title">
@@ -117,8 +117,8 @@
             <div class="columns is-multiline">
               <div class="column is-12">
                 <text-field
-                  [controlRef]="formStore.form.controls.title"
-                  [errorMessage]="formStore.field.title.error"
+                  [controlRef]="formState.form.controls.title"
+                  [errorMessage]="formState.field.title.error"
                   label="Title"
                   placeholder="The title of the movie"
                 ></text-field>
@@ -126,8 +126,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.genres"
-                  [errorMessage]="formStore.field.genres.error"
+                  [controlRef]="formState.form.controls.genres"
+                  [errorMessage]="formState.field.genres.error"
                   label="Genres"
                   placeholder="What are the genres?"
                 ></text-field>
@@ -135,8 +135,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.producers"
-                  [errorMessage]="formStore.field.producers.error"
+                  [controlRef]="formState.form.controls.producers"
+                  [errorMessage]="formState.field.producers.error"
                   label="Producers"
                   placeholder="How about Sule, Nunung?"
                 ></text-field>
@@ -144,8 +144,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.director"
-                  [errorMessage]="formStore.field.director.error"
+                  [controlRef]="formState.form.controls.director"
+                  [errorMessage]="formState.field.director.error"
                   label="Director"
                   placeholder="How about the director?"
                 ></text-field>
@@ -153,8 +153,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.writer"
-                  [errorMessage]="formStore.field.writer.error"
+                  [controlRef]="formState.form.controls.writer"
+                  [errorMessage]="formState.field.writer.error"
                   label="Writer"
                   placeholder="Who made the scenario?"
                 ></text-field>
@@ -162,8 +162,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.production"
-                  [errorMessage]="formStore.field.production.error"
+                  [controlRef]="formState.form.controls.production"
+                  [errorMessage]="formState.field.production.error"
                   label="Production"
                   placeholder="Who produced this film?"
                 ></text-field>
@@ -171,8 +171,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.casts"
-                  [errorMessage]="formStore.field.casts.error"
+                  [controlRef]="formState.form.controls.casts"
+                  [errorMessage]="formState.field.casts.error"
                   label="Cast"
                   placeholder="Let's fill in the cast"
                 ></text-field>
@@ -180,8 +180,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.start"
-                  [errorMessage]="formStore.field.start.error"
+                  [controlRef]="formState.form.controls.start"
+                  [errorMessage]="formState.field.start.error"
                   label="Date Start"
                   placeholder="Let's fill in the cast"
                   type="date"
@@ -190,8 +190,8 @@
 
               <div class="column is-6">
                 <text-field
-                  [controlRef]="formStore.form.controls.end"
-                  [errorMessage]="formStore.field.end.error"
+                  [controlRef]="formState.form.controls.end"
+                  [errorMessage]="formState.field.end.error"
                   label="Date End"
                   placeholder="Let's fill in the cast"
                   type="date"
@@ -200,8 +200,8 @@
 
               <div class="column is-12">
                 <textarea-field
-                  [controlRef]="formStore.form.controls.synopsis"
-                  [errorMessage]="formStore.field.synopsis.error"
+                  [controlRef]="formState.form.controls.synopsis"
+                  [errorMessage]="formState.field.synopsis.error"
                   label="Synopsis"
                   placeholder="Synopsis of this movie"
                 ></textarea-field>

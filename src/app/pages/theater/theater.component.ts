@@ -21,7 +21,7 @@ import {
 import { TheaterService } from '@app/pages/theater/theater.service';
 import { TheaterStore } from '@app/pages/theater/theater.store';
 
-import { FormStore } from '@app/shared/services/form/form.model';
+import { FormState } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
 import { ErrorMessageStore } from '@app/shared/store/error-message';
 import { LoadingStore } from '@app/shared/store/loading';
@@ -33,7 +33,7 @@ import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 })
 export class TheaterComponent implements OnInit, OnDestroy {
   errorMessage: { fetchTheaters: string };
-  formStore: FormStore;
+  formState: FormState;
   icon: { edit: IconDefinition; delete: IconDefinition };
   isEdit: boolean;
   loading: { isFetchTheaters: boolean };
@@ -84,7 +84,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
     this.subscription.add(this.theaterStateSubscription());
     this.subscription.add(this.errorMessageStateSubscription());
     this.subscription.add(this.loadingStateSubscription());
-    this.subscription.add(this.formServiceSubscription());
+    this.subscription.add(this.formStateSubscription());
   }
 
   ngOnDestroy(): void {
@@ -131,7 +131,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit(): void {
-    const { form } = this.formStore;
+    const { form } = this.formState;
 
     if (form.invalid) {
       this.formService.validate();
@@ -226,9 +226,9 @@ export class TheaterComponent implements OnInit, OnDestroy {
     );
   }
 
-  private formServiceSubscription(): SubscriptionLike {
-    return this.formService.data$.subscribe((formData: FormStore) => {
-      this.formStore = formData;
+  private formStateSubscription(): SubscriptionLike {
+    return this.formService.state$.subscribe((formState: FormState) => {
+      this.formState = formState;
     });
   }
 }

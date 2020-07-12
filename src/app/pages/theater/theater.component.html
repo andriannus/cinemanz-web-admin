@@ -104,7 +104,7 @@
     </modal>
 
     <modal [(isShow)]="modal.isPut" width="480">
-      <form [formGroup]="formStore.form" (ngSubmit)="handleSubmit()">
+      <form [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
         <div class="card">
           <div class="card-header">
             <div class="card-header-title">
@@ -116,8 +116,8 @@
             <div class="columns is-multiline">
               <div class="column is-12">
                 <text-field
-                  [controlRef]="formStore.form.controls.name"
-                  [errorMessage]="formStore.field.name.error"
+                  [controlRef]="formState.form.controls.name"
+                  [errorMessage]="formState.field.name.error"
                   label="Name"
                   placeholder="The name of the theater"
                 ></text-field>
@@ -125,8 +125,8 @@
 
               <div class="column is-12">
                 <text-field
-                  [controlRef]="formStore.form.controls.address"
-                  [errorMessage]="formStore.field.address.error"
+                  [controlRef]="formState.form.controls.address"
+                  [errorMessage]="formState.field.address.error"
                   label="Address"
                   placeholder="Where is the address?"
                 ></text-field>
@@ -134,8 +134,8 @@
 
               <div class="column is-12">
                 <text-field
-                  [controlRef]="formStore.form.controls.telephone"
-                  [errorMessage]="formStore.field.telephone.error"
+                  [controlRef]="formState.form.controls.telephone"
+                  [errorMessage]="formState.field.telephone.error"
                   label="Telephone"
                   placeholder="How do i contact them?"
                 ></text-field>
