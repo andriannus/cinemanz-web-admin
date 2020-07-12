@@ -14,6 +14,9 @@ export class TextareaFieldComponent {
   errorMessage: string;
 
   @Input()
+  id: string;
+
+  @Input()
   label: string;
 
   @Input()
@@ -25,6 +28,7 @@ export class TextareaFieldComponent {
   constructor() {
     this.controlRef = null;
     this.errorMessage = '';
+    this.id = '';
     this.label = '';
     this.noResize = false;
     this.placeholder = '';

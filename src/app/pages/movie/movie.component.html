@@ -115,6 +115,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.title"
                   [errorMessage]="formState.field.title.error"
+                  [id]="'TxtTitle'"
                   label="Title"
                   placeholder="The title of the movie"
                 ></text-field>
@@ -124,6 +125,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.genres"
                   [errorMessage]="formState.field.genres.error"
+                  [id]="'TxtGenres'"
                   label="Genres"
                   placeholder="What are the genres?"
                 ></text-field>
@@ -133,6 +135,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.producers"
                   [errorMessage]="formState.field.producers.error"
+                  [id]="'TxtProducers'"
                   label="Producers"
                   placeholder="How about Sule, Nunung?"
                 ></text-field>
@@ -142,6 +145,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.director"
                   [errorMessage]="formState.field.director.error"
+                  [id]="'TxtDirector'"
                   label="Director"
                   placeholder="How about the director?"
                 ></text-field>
@@ -151,6 +155,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.writer"
                   [errorMessage]="formState.field.writer.error"
+                  [id]="'TxtWriter'"
                   label="Writer"
                   placeholder="Who made the scenario?"
                 ></text-field>
@@ -160,6 +165,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.production"
                   [errorMessage]="formState.field.production.error"
+                  [id]="'TxtProduction'"
                   label="Production"
                   placeholder="Who produced this film?"
                 ></text-field>
@@ -169,6 +175,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.casts"
                   [errorMessage]="formState.field.casts.error"
+                  [id]="'TxtCast'"
                   label="Cast"
                   placeholder="Let's fill in the cast"
                 ></text-field>
@@ -178,6 +185,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.start"
                   [errorMessage]="formState.field.start.error"
+                  [id]="'TxtDateStart'"
                   label="Date Start"
                   placeholder="Let's fill in the cast"
                   type="date"
@@ -188,6 +196,7 @@
                 <text-field
                   [controlRef]="formState.form.controls.end"
                   [errorMessage]="formState.field.end.error"
+                  [id]="'TxtDateEnd'"
                   label="Date End"
                   placeholder="Let's fill in the cast"
                   type="date"
@@ -198,6 +207,7 @@
                 <textarea-field
                   [controlRef]="formState.form.controls.synopsis"
                   [errorMessage]="formState.field.synopsis.error"
+                  [id]="'TxtSynopsis'"
                   label="Synopsis"
                   placeholder="Synopsis of this movie"
                 ></textarea-field>

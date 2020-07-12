@@ -14,6 +14,9 @@ export class TextFieldComponent {
   errorMessage: string;
 
   @Input()
+  id: string;
+
+  @Input()
   label: string;
 
   @Input()
@@ -25,6 +28,7 @@ export class TextFieldComponent {
   constructor() {
     this.controlRef = null;
     this.errorMessage = '';
+    this.id = '';
     this.label = '';
     this.placeholder = '';
     this.type = 'text';

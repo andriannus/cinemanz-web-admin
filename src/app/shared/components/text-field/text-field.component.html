@@ -1,5 +1,5 @@
 <div class="field">
-  <label [class.has-text-danger]="errorMessage" [for]="label" class="label">
+  <label [class.has-text-danger]="errorMessage" [for]="id" class="label">
     {{ label }}
   </label>
 
@@ -7,6 +7,7 @@
     <input
       [formControl]="controlRef"
       [class.is-danger]="errorMessage"
+      [id]="id"
       [placeholder]="placeholder"
       [type]="type"
       class="input"
