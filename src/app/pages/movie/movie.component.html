@@ -22,43 +22,39 @@
       <table class="table is-fullwidth is-striped">
         <thead>
           <tr>
-            <th>No.</th>
+            <th class="has-text-centered" width="10%">No.</th>
             <th>Judul</th>
-            <th>Action</th>
+            <th class="has-text-centered" width="15%">Action</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let movie of movies.data; let i = index">
-            <td>
+            <td class="has-text-centered">
               {{ (movies.meta.page - 1) * movies.meta.perPage + (i + 1) }}
             </td>
             <td>{{ movie.title }}</td>
             <td>
-              <div class="field is-grouped">
-                <p class="control">
-                  <button
-                    class="button is-light"
-                    type="button"
-                    (click)="put(movie)"
-                  >
-                    <span class="icon">
-                      <fa-icon [icon]="icon.edit"></fa-icon>
-                    </span>
-                  </button>
-                </p>
+              <div class="buttons is-centered">
+                <button
+                  class="button is-light"
+                  type="button"
+                  (click)="put(movie)"
+                >
+                  <span class="icon">
+                    <fa-icon [icon]="icon.edit"></fa-icon>
+                  </span>
+                </button>
 
-                <p class="control">
-                  <button
-                    class="button is-danger"
-                    type="button"
-                    (click)="confirmDelete(movie)"
-                  >
-                    <span class="icon">
-                      <fa-icon [icon]="icon.delete"></fa-icon>
-                    </span>
-                  </button>
-                </p>
+                <button
+                  class="button is-danger"
+                  type="button"
+                  (click)="confirmDelete(movie)"
+                >
+                  <span class="icon">
+                    <fa-icon [icon]="icon.delete"></fa-icon>
+                  </span>
+                </button>
               </div>
             </td>
           </tr>
