@@ -1,0 +1,17 @@
+<div class="field">
+  <label [class.has-text-danger]="errorMessage" [for]="label" class="label">
+    {{ label }}
+  </label>
+
+  <div class="control">
+    <textarea
+      [formControl]="controlRef"
+      [class.is-danger]="errorMessage"
+      [placeholder]="placeholder"
+      [style.resize]="getResizeValue()"
+      class="input"
+    ></textarea>
+  </div>
+
+  <p *ngIf="errorMessage" class="help is-danger">{{ errorMessage }}</p>
+</div>
