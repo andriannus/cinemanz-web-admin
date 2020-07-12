@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '@app/shared/guards/auth/auth.guard';
 import { NotAuthGuard } from '@app/shared/guards/auth/not-auth.guard';
@@ -12,48 +12,52 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => {
+    loadChildren() {
       return import('@app/pages/dashboard/dashboard.module').then(
-        m => m.DashboardModule,
+        module => module.DashboardModule,
       );
     },
     canLoad: [AuthGuard],
   },
   {
     path: 'movie',
-    loadChildren: () => {
-      return import('@app/pages/movie/movie.module').then(m => m.MovieModule);
+    loadChildren() {
+      return import('@app/pages/movie/movie.module').then(
+        module => module.MovieModule,
+      );
     },
     canLoad: [AuthGuard],
   },
   {
     path: 'theater',
-    loadChildren: () => {
+    loadChildren() {
       return import('@app/pages/theater/theater.module').then(
-        m => m.TheaterModule,
+        module => module.TheaterModule,
       );
     },
     canLoad: [AuthGuard],
   },
   {
     path: 'login',
-    loadChildren: () => {
+    loadChildren() {
       return import('@app/pages/login/login.module').then(m => m.LoginModule);
     },
     canLoad: [NotAuthGuard],
   },
   {
     path: '**',
-    loadChildren: () => {
+    loadChildren() {
       return import('@app/pages/not-found/not-found.module').then(
-        m => m.NotFoundModule,
+        module => module.NotFoundModule,
       );
     },
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
