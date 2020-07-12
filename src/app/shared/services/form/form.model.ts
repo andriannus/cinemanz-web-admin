@@ -1,5 +1,10 @@
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 
+export interface FormState {
+  form: FormGroup;
+  field: FormValidation;
+}
+
 export interface FormValidation {
   [key: string]: {
     rules: (
@@ -11,9 +16,4 @@ export interface FormValidation {
     message: { [key: string]: string };
     error: string;
   };
-}
-
-export interface FormStore {
-  form: FormGroup;
-  field: FormValidation;
 }

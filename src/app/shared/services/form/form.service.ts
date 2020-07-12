@@ -1,35 +1,18 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, BehaviorSubject } from 'rxjs';
 
+import { FORM_STATE } from '@app/shared/services/form/form.constant';
 import {
-  FormStore,
+  FormState,
   FormValidation,
 } from '@app/shared/services/form/form.model';
 
+import { Store } from '@app/shared/store';
+
 @Injectable()
-export class FormService {
-  data$: Observable<FormStore>;
-
-  private store: FormStore;
-  private dispatcher: BehaviorSubject<FormStore>;
-
+export class FormService extends Store<Partial<FormState>> {
   constructor(private fb: FormBuilder) {
-    this.store = {
-      field: null,
-      form: null,
-    };
-
-    this.dispatcher = new BehaviorSubject({}) as BehaviorSubject<FormStore>;
-    this.data$ = this.dispatcher.asObservable();
-
-    this.dispatcher.next(this.store);
-  }
-
-  private setStore(store: object): void {
-    const newStore = Object.assign(this.store, store);
-
-    this.dispatcher.next(newStore);
+    super(FORM_STATE);
   }
 
   setup(formValidation: FormValidation): void {
@@ -39,12 +22,12 @@ export class FormService {
       rules[field] = formValidation[field].rules;
     });
 
-    this.setStore({
+    this.setState({
       field: formValidation,
       form: this.fb.group(rules),
     });
 
-    this.store.form.valueChanges.subscribe(() => this.handleValueChanges());
+    this.state.form.valueChanges.subscribe(() => this.handleValueChanges());
   }
 
   validate(): void {
@@ -53,7 +36,7 @@ export class FormService {
   }
 
   reset(): void {
-    const { field, form } = this.store;
+    const { field, form } = this.state;
 
     form.reset();
 
@@ -63,17 +46,17 @@ export class FormService {
   }
 
   patchValue(value: { [key: string]: any }): void {
-    this.store.form.patchValue(value);
+    this.state.form.patchValue(value);
   }
 
   private handleValueChanges(): void {
-    const { field, form } = this.store;
+    const { field, form } = this.state;
 
     Object.keys(field).forEach((fieldName: string) => {
       const control = form.get(fieldName);
       field[fieldName].error = '';
 
-      this.setStore({ field });
+      this.setState({ field });
 
       if (!control) {
         return;
@@ -83,7 +66,7 @@ export class FormService {
         Object.keys(control.errors).forEach((key: string) => {
           field[fieldName].error = `${field[fieldName].message[key]}`;
 
-          this.setStore({ field });
+          this.setState({ field });
         });
 
         return;
@@ -93,7 +76,7 @@ export class FormService {
         Object.keys(control.errors).forEach((key: string) => {
           field[fieldName].error = `${field[fieldName].message[key]}`;
 
-          this.setStore({ field });
+          this.setState({ field });
         });
 
         return;
@@ -102,7 +85,7 @@ export class FormService {
   }
 
   private makeDirty(): void {
-    const { form } = this.store;
+    const { form } = this.state;
 
     Object.keys(form.controls).forEach((field: string) => {
       const control = form.get(field);
