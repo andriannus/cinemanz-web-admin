@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { FetchResult } from 'apollo-link';
 import { Subscription, SubscriptionLike } from 'rxjs';
 import {
   faPencilAlt,
@@ -146,15 +145,17 @@ export class TheaterComponent implements OnInit, OnDestroy {
       };
 
       this.submitEditedTheater(udpatedTheater);
-    } else {
-      this.submitCreatedTheater(form.value);
+      return;
     }
+
+    this.submitCreatedTheater(form.value);
   }
 
   submitEditedTheater(formValue: Theater): void {
     this.theaterService
       .updateTheater(formValue)
-      .subscribe(({ data }: FetchResult<UpdateTheaterOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: UpdateTheaterOperation) => {
         const { result } = data.updateTheater;
 
         if (result) {
@@ -169,7 +170,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
     this.theaterService
       .createTheater(createdTheater)
-      .subscribe(({ data }: FetchResult<CreateTheaterOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: CreateTheaterOperation) => {
         const { result } = data.createTheater;
 
         if (result) {
@@ -189,7 +191,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
     this.theaterService
       .deleteTheater(id)
-      .subscribe(({ data }: FetchResult<DeleteTheaterOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: DeleteTheaterOperation) => {
         const { result } = data.deleteTheater;
 
         if (result) {

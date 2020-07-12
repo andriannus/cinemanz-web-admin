@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { FetchResult } from 'apollo-link';
 import { Subscription, SubscriptionLike } from 'rxjs';
 import {
   faPencilAlt,
@@ -128,15 +127,17 @@ export class MovieComponent implements OnInit, OnDestroy {
       };
 
       this.submitEditedMovie(udpatedTheater);
-    } else {
-      this.submitCreatedMovie(form.value);
+      return;
     }
+
+    this.submitCreatedMovie(form.value);
   }
 
   submitEditedMovie(formValue: Movie): void {
     this.movieService
       .updateMovie(formValue)
-      .subscribe(({ data }: FetchResult<UpdateMovieOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: UpdateMovieOperation) => {
         const { result } = data.updateMovie;
 
         if (result) {
@@ -151,7 +152,8 @@ export class MovieComponent implements OnInit, OnDestroy {
 
     this.movieService
       .createMovie(createdMovie)
-      .subscribe(({ data }: FetchResult<CreateMovieOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: CreateMovieOperation) => {
         const { result } = data.createMovie;
 
         if (result) {
@@ -180,7 +182,8 @@ export class MovieComponent implements OnInit, OnDestroy {
 
     this.movieService
       .deleteMovie(id)
-      .subscribe(({ data }: FetchResult<DeleteMovieOperation>) => {
+      .pipe(map(({ data }) => data))
+      .subscribe((data: DeleteMovieOperation) => {
         const { result } = data.deleteMovie;
 
         if (result) {
