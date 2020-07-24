@@ -62,17 +62,7 @@ export class FormService extends Store<Partial<FormState>> {
         return;
       }
 
-      if (control.dirty && control.invalid) {
-        Object.keys(control.errors).forEach((key: string) => {
-          field[fieldName].error = `${field[fieldName].message[key]}`;
-
-          this.setState({ field });
-        });
-
-        return;
-      }
-
-      if (control.value && control.invalid) {
+      if (control.invalid && (control.dirty || control.invalid)) {
         Object.keys(control.errors).forEach((key: string) => {
           field[fieldName].error = `${field[fieldName].message[key]}`;
 
