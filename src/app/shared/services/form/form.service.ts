@@ -7,10 +7,10 @@ import {
   FormValidation,
 } from '@app/shared/services/form/form.model';
 
-import { Store } from '@app/shared/store';
+import Store from '@app/shared/store';
 
 @Injectable()
-export class FormService extends Store<Partial<FormState>> {
+export class FormService extends Store<FormState> {
   constructor(private fb: FormBuilder) {
     super(FORM_STATE);
   }

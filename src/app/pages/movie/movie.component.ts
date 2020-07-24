@@ -23,8 +23,8 @@ import { MovieStore } from '@app/pages/movie/movie.store';
 
 import { FormState } from '@app/shared/services/form/form.model';
 import { FormService } from '@app/shared/services/form/form.service';
-import { ErrorMessageStore } from '@app/shared/store/error-message';
-import { LoadingStore } from '@app/shared/store/loading';
+import ErrorMessageStore from '@app/shared/store/error-message';
+import LoadingStore from '@app/shared/store/loading';
 import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 @Component({

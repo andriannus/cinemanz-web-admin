@@ -18,8 +18,8 @@ import { TextFieldModule } from '@app/shared/components/text-field/text-field.mo
 import { TextareaFieldModule } from '@app/shared/components/textarea-field/textarea-field.module';
 import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.module';
 import { FormService } from '@app/shared/services/form/form.service';
-import { ErrorMessageStore } from '@app/shared/store/error-message';
-import { LoadingStore } from '@app/shared/store/loading';
+import ErrorMessageStore from '@app/shared/store/error-message';
+import LoadingStore from '@app/shared/store/loading';
 
 @NgModule({
   declarations: [MovieComponent],

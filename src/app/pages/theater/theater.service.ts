@@ -21,8 +21,8 @@ import CreateTheater from '@app/shared/graphql/mutations/CreateTheater.gql';
 import DeleteTheater from '@app/shared/graphql/mutations/DeleteTheater.gql';
 import UpdateTheater from '@app/shared/graphql/mutations/UpdateTheater.gql';
 import Theaters from '@app/shared/graphql/queries/Theaters.gql';
-import { ErrorMessageStore } from '@app/shared/store/error-message';
-import { LoadingStore } from '@app/shared/store/loading';
+import ErrorMessageStore from '@app/shared/store/error-message';
+import LoadingStore from '@app/shared/store/loading';
 import { PaginationOptions } from '@app/shared/utils/pagination/pagination.model';
 
 @Injectable()
