@@ -1,8 +1,8 @@
 <plain-layout>
   <div class="columns">
-    <div class="column is-two-fifths is-offset-one-third">
+    <div class="column is-one-third is-offset-one-third">
       <form [formGroup]="formState.form" (ngSubmit)="login()">
-        <div class="card has-text-left">
+        <div class="card">
           <div class="card-header">
             <p class="card-header-title">
               CinemaNz Admin Login
@@ -29,14 +29,16 @@
                   type="password"
                 ></text-field>
               </div>
-            </div>
-          </div>
 
-          <div class="card-footer">
-            <div class="card-footer-item">
-              <button class="button is-dark is-fullwidth" type="submit">
-                Login
-              </button>
+              <div class="column is-12">
+                <button
+                  id="BtnLoginSubmit"
+                  class="button is-dark is-fullwidth"
+                  type="submit"
+                >
+                  Login
+                </button>
+              </div>
             </div>
           </div>
         </div>
