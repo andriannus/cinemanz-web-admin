@@ -1,19 +1,15 @@
-<div class="card is-shadowless">
-  <header class="card-header">
-    <span class="card-header-title">
-      Menus
-    </span>
-  </header>
+<div class="box is-shadowless">
+  <aside class="menu">
+    <p class="menu-label">
+      General
+    </p>
 
-  <div class="card-content">
-    <aside class="menu">
-      <ul class="menu-list">
-        <li *ngFor="let menu of menus">
-          <a [routerLink]="menu.link" routerLinkActive="is-active">
-            {{ menu.name }}
-          </a>
-        </li>
-      </ul>
-    </aside>
-  </div>
+    <ul class="menu-list">
+      <li *ngFor="let menu of menus">
+        <a [routerLink]="menu.link" routerLinkActive="is-active">
+          {{ menu.name }}
+        </a>
+      </li>
+    </ul>
+  </aside>
 </div>
