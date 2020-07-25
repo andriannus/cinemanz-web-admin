@@ -1,15 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-$primary-color: #363636;
-$link: $primary-color;
-$link-hover: #3273dc;
-$menu-item-active-background-color: $primary-color;
-
 table {
   &.table {
-    th {
-      vertical-align: middle;
-    }
-
+    th,
     td {
       vertical-align: middle;
     }
