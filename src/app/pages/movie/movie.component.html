@@ -1,5 +1,7 @@
 <base-layout>
-  <p *ngIf="loading.isFetchMovies; else content">Loading...</p>
+  <loading-spinner
+    *ngIf="loading.isFetchMovies; else content"
+  ></loading-spinner>
 
   <ng-template #content>
     <ng-container *ngIf="movies.data.length; else notFound">

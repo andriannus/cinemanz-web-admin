@@ -12,6 +12,7 @@ import {
 import { MovieService } from '@app/pages/movie/movie.service';
 import { MovieStore } from '@app/pages/movie/movie.store';
 
+import { LoadingSpinnerModule } from '@app/shared/components/loading-spinner/loading-spinner.module';
 import { ModalModule } from '@app/shared/components/modal/modal.module';
 import { PaginationModule } from '@app/shared/components/pagination/pagination.module';
 import { TextFieldModule } from '@app/shared/components/text-field/text-field.module';
@@ -28,6 +29,7 @@ import LoadingStore from '@app/shared/store/loading';
     CommonModule,
     FontAwesomeModule,
     FormsModule,
+    LoadingSpinnerModule,
     ModalModule,
     PaginationModule,
     ReactiveFormsModule,
