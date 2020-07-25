@@ -5,68 +5,70 @@
 
   <ng-template #content>
     <ng-container *ngIf="theaters.data.length; else notFound">
-      <nav class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <h1 class="title">Theater</h1>
+      <div class="box is-shadowless">
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <h1 class="title">Theater</h1>
+            </div>
           </div>
-        </div>
-        <div class="level-right">
-          <div class="level-item">
-            <button class="button is-info" type="button" (click)="put()">
-              Add Theater
-            </button>
+          <div class="level-right">
+            <div class="level-item">
+              <button class="button is-info" type="button" (click)="put()">
+                Add Theater
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      <table class="table is-fullwidth is-striped">
-        <thead>
-          <tr>
-            <th class="has-text-centered" width="10%">No.</th>
-            <th>Name</th>
-            <th class="has-text-centered" width="15%">Action</th>
-          </tr>
-        </thead>
+        <table class="table is-fullwidth is-striped">
+          <thead>
+            <tr>
+              <th class="has-text-centered" width="10%">No.</th>
+              <th>Name</th>
+              <th class="has-text-centered" width="15%">Action</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr *ngFor="let theater of theaters.data; let i = index">
-            <td class="has-text-centered">
-              {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
-            </td>
-            <td>{{ theater.name }}</td>
-            <td>
-              <div class="buttons is-centered">
-                <button
-                  class="button is-light"
-                  type="button"
-                  (click)="put(theater)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.edit"></fa-icon>
-                  </span>
-                </button>
+          <tbody>
+            <tr *ngFor="let theater of theaters.data; let i = index">
+              <td class="has-text-centered">
+                {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
+              </td>
+              <td>{{ theater.name }}</td>
+              <td>
+                <div class="buttons is-centered">
+                  <button
+                    class="button is-light"
+                    type="button"
+                    (click)="put(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.edit"></fa-icon>
+                    </span>
+                  </button>
 
-                <button
-                  class="button is-danger"
-                  type="button"
-                  (click)="confirmDelete(theater)"
-                >
-                  <span class="icon">
-                    <fa-icon [icon]="icon.delete"></fa-icon>
-                  </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                  <button
+                    class="button is-danger"
+                    type="button"
+                    (click)="confirmDelete(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.delete"></fa-icon>
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-      <pagination
-        [meta]="theaters.meta"
-        (nextPageClicked)="fetchPaginatedTheaters($event)"
-        (previousPageClicked)="fetchPaginatedTheaters($event)"
-      ></pagination>
+        <pagination
+          [meta]="theaters.meta"
+          (nextPageClicked)="fetchPaginatedTheaters($event)"
+          (previousPageClicked)="fetchPaginatedTheaters($event)"
+        ></pagination>
+      </div>
     </ng-container>
 
     <modal [(isShow)]="modal.isDelete" width="360">
