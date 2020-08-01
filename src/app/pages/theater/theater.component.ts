@@ -36,7 +36,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
   formState: FormState;
   icon: { edit: IconDefinition; delete: IconDefinition };
   isEdit: boolean;
-  loading: { isFetchTheaters: boolean };
+  loading: TheaterLoadingState;
   modal: {
     isDelete: boolean;
     isPut: boolean;
@@ -60,7 +60,10 @@ export class TheaterComponent implements OnInit, OnDestroy {
       delete: faTrashAlt,
     };
     this.isEdit = false;
-    this.loading = { isFetchTheaters: false };
+    this.loading = {
+      isFetchTheaters: false,
+      isPutTheater: false,
+    };
     this.modal = {
       isDelete: false,
       isPut: false,
@@ -152,6 +155,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
   }
 
   submitEditedTheater(formValue: Theater): void {
+    this.loadingStore.set({ isPutTheater: true });
+
     this.theaterService
       .updateTheater(formValue)
       .pipe(map(({ data }) => data))
@@ -162,10 +167,14 @@ export class TheaterComponent implements OnInit, OnDestroy {
           this.cancel();
           this.fetchPaginatedTheaters();
         }
+
+        this.loadingStore.set({ isPutTheater: false });
       });
   }
 
   submitCreatedTheater(formValue: Theater): void {
+    this.loadingStore.set({ isPutTheater: true });
+
     const { _id, ...createdTheater } = formValue;
 
     this.theaterService
@@ -178,6 +187,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
           this.cancel();
           this.fetchPaginatedTheaters();
         }
+
+        this.loadingStore.set({ isPutTheater: false });
       });
   }
 
@@ -187,6 +198,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
   }
 
   delete(): void {
+    this.loadingStore.set({ isPutTheater: true });
+
     const { _id: id } = this.selectedTheater;
 
     this.theaterService
@@ -199,6 +212,8 @@ export class TheaterComponent implements OnInit, OnDestroy {
           this.toggleModal(TheaterModal.Delete);
           this.fetchPaginatedTheaters();
         }
+
+        this.loadingStore.set({ isPutTheater: false });
       });
   }
 

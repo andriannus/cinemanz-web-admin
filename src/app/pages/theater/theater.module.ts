@@ -57,6 +57,7 @@ import LoadingStore from '@app/shared/store/loading';
       useFactory() {
         return new LoadingStore<TheaterLoadingState>({
           isFetchTheaters: false,
+          isPutTheater: false,
         });
       },
     },

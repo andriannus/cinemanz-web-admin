@@ -11,6 +11,7 @@ export interface TheaterErrorMessageState {
 
 export interface TheaterLoadingState {
   isFetchTheaters: boolean;
+  isPutTheater: boolean;
 }
 
 export interface Theater {

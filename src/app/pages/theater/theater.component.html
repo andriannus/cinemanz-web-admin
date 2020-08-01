@@ -146,11 +146,20 @@
             </div>
 
             <div class="buttons is-right">
-              <button class="button is-info is-light" type="submit">
+              <button
+                [class.is-loading]="loading.isPutTheater"
+                class="button is-info is-light"
+                type="submit"
+              >
                 Confirm
               </button>
 
-              <button class="button is-light" type="button" (click)="cancel()">
+              <button
+                [disabled]="loading.isPutTheater"
+                class="button is-light"
+                type="button"
+                (click)="cancel()"
+              >
                 Cancel
               </button>
             </div>
