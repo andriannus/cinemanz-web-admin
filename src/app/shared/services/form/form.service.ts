@@ -62,7 +62,7 @@ export class FormService extends Store<FormState> {
         return;
       }
 
-      if (control.invalid && (control.dirty || control.invalid)) {
+      if (control.invalid && (control.dirty || control.value)) {
         Object.keys(control.errors).forEach((key: string) => {
           field[fieldName].error = `${field[fieldName].message[key]}`;
 
