@@ -5,7 +5,7 @@ import { UseCase } from '../base/use-case';
 import { TheaterRepository } from '../repositories/theater.repository';
 
 import {
-  TheaterGetParams,
+  TheaterGetParam,
   TheaterEntity,
 } from '@app/data/repository/theater-app-repository/theater-app.entity';
 
@@ -19,7 +19,7 @@ export class FetchPaginatedTheatersUseCase
     UseCase<{ skip: number; limit: number }, PaginatedData<TheaterEntity>> {
   constructor(private theaterRepository: TheaterRepository) {}
 
-  execute(params: TheaterGetParams): Observable<PaginatedData<TheaterEntity>> {
-    return this.theaterRepository.fetchPaginatedTheaters(params);
+  execute(param: TheaterGetParam): Observable<PaginatedData<TheaterEntity>> {
+    return this.theaterRepository.fetchPaginatedTheaters(param);
   }
 }

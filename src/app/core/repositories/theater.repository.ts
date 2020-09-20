@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   CreateTheaterEntity,
   ReformTheaterResponse,
-  TheaterGetParams,
+  TheaterGetParam,
   TheaterEntity,
 } from '@app/data/repository/theater-app-repository/theater-app.entity';
 
@@ -11,7 +11,7 @@ import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
 
 export abstract class TheaterRepository {
   abstract fetchPaginatedTheaters(
-    params: TheaterGetParams,
+    param: TheaterGetParam,
   ): Observable<PaginatedData<TheaterEntity>>;
   abstract createTheater(
     theater: CreateTheaterEntity,

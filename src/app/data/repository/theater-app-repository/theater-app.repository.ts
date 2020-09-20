@@ -8,7 +8,7 @@ import {
   CreateTheaterOperation,
   DeleteTheaterOperation,
   ReformTheaterResponse,
-  TheaterGetParams,
+  TheaterGetParam,
   TheaterEntity,
   TheatersOperation,
   TheatersResponse,
@@ -35,7 +35,7 @@ export class TheaterAppRepository extends TheaterRepository {
   }
 
   fetchPaginatedTheaters(
-    param: TheaterGetParams,
+    param: TheaterGetParam,
   ): Observable<PaginatedData<TheaterEntity>> {
     const { limit, page, skip } = param;
 

@@ -1,6 +1,6 @@
 import { Response } from '@app/shared/models/response.model';
 
-export interface TheaterGetParams {
+export interface TheaterGetParam {
   limit: number;
   page: number;
   skip: number;

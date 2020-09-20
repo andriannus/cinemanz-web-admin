@@ -14,7 +14,7 @@ import { FetchPaginatedTheatersUseCase } from '@app/core/use-cases/fetch-paginat
 import { UpdateTheaterUseCase } from '@app/core/use-cases/update-theater.use-case';
 import {
   ReformTheaterResponse,
-  TheaterGetParams,
+  TheaterGetParam,
 } from '@app/data/repository/theater-app-repository/theater-app.entity';
 
 import { THEATER_FORM } from './theater.constant';
@@ -153,7 +153,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
   fetchTheaters(page: number = 1): void {
     const skip = (page - 1) * DATA_PER_PAGE;
-    const params: TheaterGetParams = {
+    const param: TheaterGetParam = {
       limit: DATA_PER_PAGE,
       page,
       skip,
@@ -161,7 +161,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
 
     this.loading.isFetchTheaters = true;
 
-    this.fetchPaginatedTheaters.execute(params).subscribe(
+    this.fetchPaginatedTheaters.execute(param).subscribe(
       (theaters: PaginatedData<TheaterModel>) => {
         this.theaters = theaters;
         this.loading.isFetchTheaters = false;
