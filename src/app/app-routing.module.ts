@@ -12,12 +12,12 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    canLoad: [AuthGuard],
     loadChildren() {
       return import('@app/pages/dashboard/dashboard.module').then(
         module => module.DashboardModule,
       );
     },
-    canLoad: [AuthGuard],
   },
   {
     path: 'movie',
@@ -30,19 +30,21 @@ const routes: Routes = [
   },
   {
     path: 'theater',
+    canLoad: [AuthGuard],
     loadChildren() {
-      return import('@app/pages/theater/theater.module').then(
+      return import('@app/presentation/theater/theater.module').then(
         module => module.TheaterModule,
       );
     },
-    canLoad: [AuthGuard],
   },
   {
     path: 'login',
-    loadChildren() {
-      return import('@app/pages/login/login.module').then(m => m.LoginModule);
-    },
     canLoad: [NotAuthGuard],
+    loadChildren() {
+      return import('@app/pages/login/login.module').then(
+        module => module.LoginModule,
+      );
+    },
   },
   {
     path: '**',
@@ -56,7 +58,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })

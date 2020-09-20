@@ -1,0 +1,179 @@
+<base-layout>
+  <loading-spinner
+    *ngIf="loading.isFetchTheaters; else content"
+  ></loading-spinner>
+
+  <ng-template #content>
+    <ng-container *ngIf="theaters.data.length; else notFound">
+      <div class="box is-shadowless">
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <h1 class="title">Theater</h1>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+              <button class="button is-info" type="button" (click)="put()">
+                Add Theater
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <table class="table is-fullwidth is-striped">
+          <thead>
+            <tr>
+              <th class="has-text-centered" width="10%">No.</th>
+              <th>Name</th>
+              <th class="has-text-centered" width="15%">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let theater of theaters.data; let i = index">
+              <td class="has-text-centered">
+                {{ (theaters.meta.page - 1) * theaters.meta.perPage + (i + 1) }}
+              </td>
+              <td>{{ theater.name }}</td>
+              <td>
+                <div class="buttons is-centered">
+                  <button
+                    class="button is-light"
+                    type="button"
+                    (click)="put(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.edit"></fa-icon>
+                    </span>
+                  </button>
+
+                  <button
+                    class="button is-danger"
+                    type="button"
+                    (click)="confirmDelete(theater)"
+                  >
+                    <span class="icon">
+                      <fa-icon [icon]="icon.delete"></fa-icon>
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <pagination
+          [meta]="theaters.meta"
+          (nextPageClicked)="fetchTheaters($event)"
+          (previousPageClicked)="fetchTheaters($event)"
+        ></pagination>
+      </div>
+    </ng-container>
+
+    <modal [(isShow)]="modal.isDelete" width="360">
+      <div class="box">
+        <div class="mb-5">
+          <p>
+            This action
+            <strong>cannot</strong>
+            to be undone. This will permanently delete the
+            <b>{{ selectedTheater.name }}</b>
+            theater.
+          </p>
+        </div>
+
+        <div class="buttons is-right">
+          <button
+            class="button is-danger is-light"
+            type="button"
+            (click)="delete()"
+          >
+            Confirm
+          </button>
+
+          <button
+            class="button is-light"
+            type="button"
+            (click)="toggleModal(TheaterModal.Delete)"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </modal>
+
+    <modal [(isShow)]="modal.isPut" width="480">
+      <form [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              {{ isEdit ? 'Edit' : 'Add' }} Theater
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="columns is-multiline">
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formState.form.controls.name"
+                  [errorMessage]="formState.field.name.error"
+                  [id]="'TxtName'"
+                  label="Name"
+                  placeholder="The name of the theater"
+                ></text-field>
+              </div>
+
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formState.form.controls.address"
+                  [errorMessage]="formState.field.address.error"
+                  [id]="'TxtAddress'"
+                  label="Address"
+                  placeholder="Where is the address?"
+                ></text-field>
+              </div>
+
+              <div class="column is-12">
+                <text-field
+                  [controlRef]="formState.form.controls.telephone"
+                  [errorMessage]="formState.field.telephone.error"
+                  [id]="'TxtTelephone'"
+                  label="Telephone"
+                  placeholder="How do i contact them?"
+                ></text-field>
+              </div>
+            </div>
+
+            <div class="buttons is-right">
+              <button
+                [class.is-loading]="loading.isPutTheater"
+                class="button is-info is-light"
+                type="submit"
+              >
+                Confirm
+              </button>
+
+              <button
+                [disabled]="loading.isPutTheater"
+                class="button is-light"
+                type="button"
+                (click)="cancel()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </modal>
+  </ng-template>
+
+  <ng-template #notFound>
+    <p class="mb-3">Data not found</p>
+
+    <button class="button is-info" type="button" (click)="put()">
+      Add Theater
+    </button>
+  </ng-template>
+</base-layout>
