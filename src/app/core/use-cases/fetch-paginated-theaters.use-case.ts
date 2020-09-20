@@ -15,8 +15,7 @@ import { PaginatedData } from '@app/shared/utils/pagination/pagination.model';
   providedIn: 'root',
 })
 export class FetchPaginatedTheatersUseCase
-  implements
-    UseCase<{ skip: number; limit: number }, PaginatedData<TheaterEntity>> {
+  implements UseCase<TheaterGetParam, PaginatedData<TheaterEntity>> {
   constructor(private theaterRepository: TheaterRepository) {}
 
   execute(param: TheaterGetParam): Observable<PaginatedData<TheaterEntity>> {
