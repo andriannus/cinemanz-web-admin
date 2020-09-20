@@ -173,11 +173,11 @@ export class TheaterComponent implements OnInit, OnDestroy {
     );
   }
 
-  submitEditedTheater(formValue: TheaterModel): void {
+  submitEditedTheater(theater: TheaterModel): void {
     this.loading.isPutTheater = true;
 
     this.updateTheater
-      .execute(formValue)
+      .execute(theater)
       .subscribe((res: ReformTheaterResponse) => {
         if (res.result) {
           this.cancel();
@@ -204,7 +204,7 @@ export class TheaterComponent implements OnInit, OnDestroy {
   }
 
   delete(): void {
-    const { _id: id } = this.selectedTheater;
+    const id = this.selectedTheater._id;
 
     this.loading.isPutTheater = true;
 

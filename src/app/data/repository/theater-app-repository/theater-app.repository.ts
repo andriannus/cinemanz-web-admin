@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -42,10 +43,13 @@ export class TheaterAppRepository extends TheaterRepository {
     return this.apollo
       .watchQuery<TheatersOperation>({
         query: Theaters,
-        variables: { skip, limit },
+        variables: {
+          skip,
+          limit,
+        },
       })
       .valueChanges.pipe(
-        map(({ data }) => data.theaters),
+        map(({ data }: ApolloQueryResult<TheatersOperation>) => data.theaters),
         map((res: TheatersResponse) => {
           const options: PaginationOptions = {
             limit,
