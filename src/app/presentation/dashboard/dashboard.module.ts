@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { DashboardComponent } from '@app/pages/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard.component';
 
 import { BaseLayoutModule } from '@app/shared/layouts/base-layout/base-layout.module';
 

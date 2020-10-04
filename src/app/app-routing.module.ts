@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'dashboard',
     canLoad: [AuthGuard],
     loadChildren() {
-      return import('@app/pages/dashboard/dashboard.module').then(
+      return import('@app/presentation/dashboard/dashboard.module').then(
         module => module.DashboardModule,
       );
     },
@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: '**',
     loadChildren() {
-      return import('@app/pages/not-found/not-found.module').then(
+      return import('@app/presentation/not-found/not-found.module').then(
         module => module.NotFoundModule,
       );
     },
