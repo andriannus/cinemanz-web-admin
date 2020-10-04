@@ -41,7 +41,7 @@ const routes: Routes = [
     path: 'login',
     canLoad: [NotAuthGuard],
     loadChildren() {
-      return import('@app/pages/login/login.module').then(
+      return import('@app/presentation/login/login.module').then(
         module => module.LoginModule,
       );
     },
